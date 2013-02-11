@@ -1,0 +1,22 @@
+{
+    "name": "rouffj/slugify",
+    "type": "library",
+    "description": "PHP slugify library.",
+    "keywords": ["slugify"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jean-François Simon",
+            "email": "contact@jfsimon.fr"
+        },{
+            "name": "Joseph Rouff",
+            "email": "rouffj@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-0": { "Rouffj\\Slugify": "src/" }
+    }
+}
