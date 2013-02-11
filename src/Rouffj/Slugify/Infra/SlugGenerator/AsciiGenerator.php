@@ -2,26 +2,26 @@
 
 namespace Rouffj\Slugify\Infra\SlugGenerator;
 
-use Rouffj\Slugify\Service\SlugGeneratorInterface;
-
 /**
- * Passthru slugifier returning joined values.
+ * Ascii text slugifier.
  *
  * @author Jean-François Simon <jeanfrancois.simon@sensiolabs.com>
  */
-class PassthruGenerator implements SlugGeneratorInterface
+class AsciiGenerator extends PassthruGenerator
 {
     /**
      * @var string
      */
-    private $separator;
+    private $joker;
 
     /**
+     * @param string $joker
      * @param string $separator
      */
-    public function __construct($separator = '')
+    public function __construct($joker = '-', $separator = '-')
     {
-        $this->separator = $separator;
+        $this->joker = $joker;
+        parent::__construct($separator);
     }
 
     /**
@@ -29,6 +29,9 @@ class PassthruGenerator implements SlugGeneratorInterface
      */
     public function slugify(array $values)
     {
-        return implode($this->separator, $values);
+        $slug = preg_replace('~[^a-z0-9]~i', $this->joker, parent::slugify($values));
+        $slug = preg_replace('~['.preg_quote($this->joker).']+~', $this->joker, $slug);
+
+        return trim(strtolower($slug), $this->joker);
     }
 }
