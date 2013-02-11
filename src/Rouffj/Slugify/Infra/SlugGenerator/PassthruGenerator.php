@@ -19,7 +19,7 @@ class PassthruGenerator implements SlugGeneratorInterface
     /**
      * @param string $separator
      */
-    public function __construct($separator = '')
+    public function __construct($separator = '-')
     {
         $this->separator = $separator;
     }
@@ -29,6 +29,8 @@ class PassthruGenerator implements SlugGeneratorInterface
      */
     public function slugify(array $values)
     {
-        return implode($this->separator, $values);
+        $slug = implode($this->separator, $values);
+
+        return trim($slug, $this->separator);
     }
 }
