@@ -3,7 +3,7 @@
 namespace Rouffj\Slugify\Tests;
 
 use Rouffj\Slugify\Service\SlugGeneratorInterface;
-use Rouffj\Slugify\Service\SluggableInterface;
+use Rouffj\Slugify\Model\SluggableInterface;
 
 class BasicEntity implements SluggableInterface
 {
