@@ -9,11 +9,11 @@
     processIsolation="false"
     stopOnFailure="false"
     syntaxCheck="false"
-    bootstrap="tests/bootstrap.php"
+    bootstrap="vendor/autoload.php"
 >
     <testsuites>
-        <testsuite name="Slugify Test Suite">
-            <directory>./tests/</directory>
+        <testsuite name="acceptance">
+            <file>./src/Rouffj/Slugify/Tests/AcceptanceTest.php</file>
         </testsuite>
     </testsuites>
     <filter>

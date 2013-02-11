@@ -3,5 +3,5 @@ PHP agnostic slugifier
 
 -  Fetch it: `git clone https://github.com/rouffj/rouffj-slugify.git`
 -  Init it: `composer install`
--  Test it: `phpunit --bootstrap=tests/bootstrap tests`
+-  Test it: `phpunit`
 -  Use it: `$slugifier->slugify($entity);`
