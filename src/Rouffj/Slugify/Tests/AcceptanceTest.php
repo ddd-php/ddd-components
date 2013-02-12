@@ -10,7 +10,7 @@ use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 use Rouffj\Slugify\Tests\Fixtures\DoctrineEntity;
 
-class BasicAcceptanceTest extends \PhpUnit_Framework_TestCase
+class AcceptanceTest extends \PhpUnit_Framework_TestCase
 {
     public function testEntityPassthruSlugification()
     {
