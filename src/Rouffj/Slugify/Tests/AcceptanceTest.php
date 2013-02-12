@@ -6,6 +6,10 @@ use Rouffj\Slugify\Infra\SlugGenerator\AsciiGenerator;
 use Rouffj\Slugify\Infra\SlugGenerator\PassthruGenerator;
 use Rouffj\Slugify\Tests\Fixtures\BasicEntity;
 
+use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManager;
+use Rouffj\Slugify\Tests\Fixtures\DoctrineEntity;
+
 class BasicAcceptanceTest extends \PhpUnit_Framework_TestCase
 {
     public function testEntityPassthruSlugification()
@@ -22,6 +26,29 @@ class BasicAcceptanceTest extends \PhpUnit_Framework_TestCase
         $entity = new BasicEntity($title);
         $entity->slugify(new AsciiGenerator());
         $this->assertEquals($slug, $entity->getSlug());
+    }
+
+    public function testICouldUseSlugifyWithDoctrineOrm()
+    {
+        // Doctrine setup
+        $params = array('driver' => 'pdo_sqlite', 'path' => __DIR__.'/Resources/db.sqlite');
+        $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__.'/Fixtures'), true);
+        $em1 = EntityManager::create($params, $config);
+        $em2 = EntityManager::create($params, $config);
+
+        // Create a new entity which should be slugified
+        $entity1 = new DoctrineEntity('Hello world!');
+        $entity1->slugify(new AsciiGenerator());
+        $this->assertEquals('hello-world', $entity1->getSlug(), 'entity title should be slugified');
+        $this->assertEquals(null, $entity1->getId(), 'entity should be InMemory but not yet in database');
+
+        // Store into database slugified entity
+        $em1->persist($entity1);
+        $em1->flush();
+
+        // Retrieve entity from database
+        $entity2 = $em2->find('Rouffj\Slugify\Tests\Fixtures\DoctrineEntity', $entity1->getId());
+        $this->assertEquals('hello-world', $entity2->getSlug());
     }
 
     public function getEntityAsciiTextPropertySlugificationTestData()
