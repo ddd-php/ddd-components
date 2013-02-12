@@ -16,6 +16,9 @@
     "require": {
         "php": ">=5.3.0"
     },
+    "require-dev": {
+        "doctrine/orm": "2.3"
+    },
     "autoload": {
         "psr-0": { "Rouffj\\Slugify": "src/" }
     }
