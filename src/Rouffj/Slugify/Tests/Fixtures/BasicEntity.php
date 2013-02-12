@@ -1,6 +1,6 @@
 <?php
 
-namespace Rouffj\Slugify\Tests;
+namespace Rouffj\Slugify\Tests\Fixtures;
 
 use Rouffj\Slugify\Service\SlugGeneratorInterface;
 use Rouffj\Slugify\Model\SluggableInterface;

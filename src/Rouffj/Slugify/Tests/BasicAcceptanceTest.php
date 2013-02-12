@@ -4,10 +4,11 @@ namespace Rouffj\Slugify\Tests;
 
 use Rouffj\Slugify\Infra\SlugGenerator\AsciiGenerator;
 use Rouffj\Slugify\Infra\SlugGenerator\PassthruGenerator;
+use Rouffj\Slugify\Tests\Fixtures\BasicEntity;
 
-class AcceptanceTest extends \PhpUnit_Framework_TestCase
+class BasicAcceptanceTest extends \PhpUnit_Framework_TestCase
 {
-    public function testEntitySlugificationWithPassthruSlugifier()
+    public function testEntityPassthruSlugification()
     {
         $title = 'Hello slugifier!';
         $entity = new BasicEntity($title);
@@ -16,7 +17,7 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
     }
 
     /** @dataProvider getEntityAsciiTextPropertySlugificationTestData */
-    public function testEntityAsciiTextPropertySlugification($title, $slug)
+    public function testEntityAsciiTextSlugification($title, $slug)
     {
         $entity = new BasicEntity($title);
         $entity->slugify(new AsciiGenerator());
