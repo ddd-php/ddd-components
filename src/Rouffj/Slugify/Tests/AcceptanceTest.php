@@ -31,6 +31,8 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
 
     public function testICouldUseSlugifyWithDoctrineOrm()
     {
+        $this->backupDatabase();
+
         // Doctrine setup
         $params = array('driver' => 'pdo_sqlite', 'path' => __DIR__.'/Resources/db.sqlite');
         $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__.'/Fixtures'), true);
@@ -49,6 +51,8 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
         // Retrieve entity from database
         $loadedArticle = $em2->find('Rouffj\Slugify\Tests\Fixtures\DoctrineArticle', $persistedArticle->getId());
         $this->assertEquals('hello-world', $loadedArticle->getSlug());
+
+        $this->restoreDatabase();
     }
 
     public function getEntityAsciiTextPropertySlugificationTestData()
@@ -61,5 +65,15 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
             array('AbC',              'abc'),
             array('é&tè!hello_(_',    't-hello'),
         );
+    }
+
+    private function backupDatabase()
+    {
+        copy(__DIR__.'/Resources/db.sqlite', __DIR__.'/Resources/db.backup');
+    }
+
+    private function restoreDatabase()
+    {
+        rename(__DIR__.'/Resources/db.backup', __DIR__.'/Resources/db.sqlite');
     }
 }
