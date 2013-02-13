@@ -76,4 +76,30 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
     {
         rename(__DIR__.'/Resources/db.backup', __DIR__.'/Resources/db.sqlite');
     }
+
+    /** @dataProvider getLatinTransliterationData */
+    public function testLatinTransliteration($original, $transliterated)
+    {
+        $transliterator = new LatinTransliterator();
+        $this->assertEquals($transliterated, $transliterator->transliterate($original));
+    }
+
+    /** @dataProvider getLatinTransliterationData */
+    public function testEntityLatinTransliteratedSlugification($title, $slug)
+    {
+        $entity = new BasicEntity($title);
+        $entity->slugify(new TransliteratedTextGenerator(new LatinTransliterator()));
+        $this->assertEquals($slug, $entity->getSlug());
+    }
+
+    public function getLatinTransliterationData()
+    {
+        return array(
+            array('hello',    'hello'),
+            array('étrange',  'etrange'),
+            array('habitó',   'habito'),
+            array('straße',   'strasse'),
+            array('señorita', 'senorita'),
+        );
+    }
 }
