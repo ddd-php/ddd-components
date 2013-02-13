@@ -2,14 +2,22 @@
 
 namespace Rouffj\Slugify\Infra\SlugGenerator;
 
+use Rouffj\Slugify\Service\SlugGeneratorInterface;
+use Rouffj\Slugify\Service\TransliteratorInterface;
+
 /**
- * Ascii text slugifier.
+ * Default text slugifier.
  *
  * @author Jean-François Simon <jeanfrancois.simon@sensiolabs.com>
  */
-class AsciiGenerator extends PassthruGenerator
+class DefaultSlugGenerator implements SlugGeneratorInterface
 {
     const REPLACED_CHARS = '~[^a-z0-9]~i';
+
+    /**
+     * @var TransliteratorInterface
+     */
+    private $transliterator;
 
     /**
      * @var string
@@ -17,13 +25,20 @@ class AsciiGenerator extends PassthruGenerator
     private $wordSeparator;
 
     /**
-     * @param string $wordSeparator
-     * @param string $fieldSeparator
+     * @var string
      */
-    public function __construct($wordSeparator = '-', $fieldSeparator = '-')
+    private $fieldSeparator;
+
+    /**
+     * @param TransliteratorInterface $transliterator
+     * @param string                  $wordSeparator
+     * @param string                  $fieldSeparator
+     */
+    public function __construct(TransliteratorInterface $transliterator, $wordSeparator = '-', $fieldSeparator = '-')
     {
+        $this->transliterator = $transliterator;
         $this->wordSeparator = $wordSeparator;
-        parent::__construct($fieldSeparator);
+        $this->fieldSeparator = $fieldSeparator;
     }
 
     /**
@@ -31,7 +46,8 @@ class AsciiGenerator extends PassthruGenerator
      */
     public function slugify(array $fieldValues)
     {
-        $slug = $this->replaceUnwantedChars(parent::slugify($fieldValues));
+        $stringToSlugify = $this->transliterator->transliterate(implode($this->fieldSeparator, $fieldValues));
+        $slug = $this->replaceUnwantedChars($stringToSlugify);
         $slug = $this->removeDuplicateWordSeparators($slug);
 
         return trim(strtolower($slug), $this->wordSeparator);
