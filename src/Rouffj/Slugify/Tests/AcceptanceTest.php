@@ -69,29 +69,13 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
         );
     }
 
-    private function backupDatabase()
-    {
-        copy(__DIR__.'/Resources/db.sqlite', __DIR__.'/Resources/db.backup');
-    }
-
-    private function restoreDatabase()
-    {
-        rename(__DIR__.'/Resources/db.backup', __DIR__.'/Resources/db.sqlite');
-    }
-
-    /** @dataProvider getLatinTransliterationData */
-    public function testLatinTransliteration($original, $transliterated)
-    {
-        $transliterator = new LatinTransliterator();
-        $this->assertEquals($transliterated, $transliterator->transliterate($original));
-    }
-
     /** @dataProvider getLatinTransliterationData */
     public function testEntityLatinTransliteratedSlugification($title, $slug)
     {
-        $entity = new InMemoryArticle($title);
-        $entity->slugify(new DefaultSlugGenerator(new LatinTransliterator()));
-        $this->assertEquals($slug, $entity->getSlug());
+        $article = new InMemoryArticle();
+        $article->setTitle($title);
+        $article->slugify(new DefaultSlugGenerator(new LatinTransliterator()));
+        $this->assertEquals($slug, $article->getSlug());
     }
 
     public function getLatinTransliterationData()
@@ -103,5 +87,15 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
             array('straße',   'strasse'),
             array('señorita', 'senorita'),
         );
+    }
+
+    private function backupDatabase()
+    {
+        copy(__DIR__.'/Resources/db.sqlite', __DIR__.'/Resources/db.backup');
+    }
+
+    private function restoreDatabase()
+    {
+        rename(__DIR__.'/Resources/db.backup', __DIR__.'/Resources/db.sqlite');
     }
 }
