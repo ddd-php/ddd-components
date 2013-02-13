@@ -9,29 +9,51 @@ namespace Rouffj\Slugify\Infra\SlugGenerator;
  */
 class AsciiGenerator extends PassthruGenerator
 {
+    const REPLACED_CHARS = '~[^a-z0-9]~i';
+
     /**
      * @var string
      */
-    private $joker;
+    private $wordSeparator;
 
     /**
-     * @param string $joker
-     * @param string $separator
+     * @param string $wordSeparator
+     * @param string $fieldSeparator
      */
-    public function __construct($joker = '-', $separator = '-')
+    public function __construct($wordSeparator = '-', $fieldSeparator = '-')
     {
-        $this->joker = $joker;
-        parent::__construct($separator);
+        $this->wordSeparator = $wordSeparator;
+        parent::__construct($fieldSeparator);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function slugify(array $values)
+    public function slugify(array $fieldValues)
     {
-        $slug = preg_replace('~[^a-z0-9]~i', $this->joker, parent::slugify($values));
-        $slug = preg_replace('~['.preg_quote($this->joker).']+~', $this->joker, $slug);
+        $slug = $this->replaceUnwantedChars(parent::slugify($fieldValues));
+        $slug = $this->removeDuplicateWordSeparators($slug);
 
-        return trim(strtolower($slug), $this->joker);
+        return trim(strtolower($slug), $this->wordSeparator);
+    }
+
+    /**
+     * @param string $stringToSlugify
+     *
+     * @return string
+     */
+    private function replaceUnwantedChars($stringToSlugify)
+    {
+        return preg_replace(self::REPLACED_CHARS, $this->wordSeparator, $stringToSlugify);
+    }
+
+    /**
+     * @param string $slug
+     *
+     * @return string
+     */
+    private function removeDuplicateWordSeparators($slug)
+    {
+        return preg_replace('~['.preg_quote($this->wordSeparator).']+~', $this->wordSeparator, $slug);
     }
 }

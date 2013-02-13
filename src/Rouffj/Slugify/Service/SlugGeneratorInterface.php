@@ -12,9 +12,9 @@ interface SlugGeneratorInterface
     /**
      * Slugifies an array of string values.
      *
-     * @param array $values
+     * @param array $fieldValues
      *
      * @return string
      */
-    public function slugify(array $values);
+    public function slugify(array $fieldValues);
 }

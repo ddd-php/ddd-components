@@ -14,23 +14,23 @@ class PassthruGenerator implements SlugGeneratorInterface
     /**
      * @var string
      */
-    private $separator;
+    private $fieldSeparator;
 
     /**
-     * @param string $separator
+     * @param string $fieldSeparator
      */
-    public function __construct($separator = '-')
+    public function __construct($fieldSeparator = '-')
     {
-        $this->separator = $separator;
+        $this->fieldSeparator = $fieldSeparator;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function slugify(array $values)
+    public function slugify(array $fieldValues)
     {
-        $slug = implode($this->separator, $values);
+        $slug = implode($this->fieldSeparator, $fieldValues);
 
-        return trim($slug, $this->separator);
+        return trim($slug, $this->fieldSeparator);
     }
 }

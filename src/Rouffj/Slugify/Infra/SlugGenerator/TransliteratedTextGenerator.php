@@ -28,8 +28,8 @@ class TransliteratedTextGenerator extends AsciiGenerator
     /**
      * {@inheritdoc}
      */
-    public function slugify(array $values)
+    public function slugify(array $fieldValues)
     {
-        return parent::slugify(array_map(array($this->transliterator, 'transliterate'), $values));
+        return parent::slugify(array_map(array($this->transliterator, 'transliterate'), $fieldValues));
     }
 }
