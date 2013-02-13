@@ -39,8 +39,6 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
         // Create a new entity which should be slugified
         $entity1 = new DoctrineEntity('Hello world!');
         $entity1->slugify(new AsciiGenerator());
-        $this->assertEquals('hello-world', $entity1->getSlug(), 'entity title should be slugified');
-        $this->assertEquals(null, $entity1->getId(), 'entity should be InMemory but not yet in database');
 
         // Store into database slugified entity
         $em1->persist($entity1);
