@@ -2,30 +2,31 @@
 
 namespace Rouffj\Slugify\Tests;
 
-use Rouffj\Slugify\Infra\SlugGenerator\AsciiGenerator;
-use Rouffj\Slugify\Infra\SlugGenerator\PassthruGenerator;
-use Rouffj\Slugify\Tests\Fixtures\BasicEntity;
-
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
-use Rouffj\Slugify\Tests\Fixtures\DoctrineEntity;
+use Rouffj\Slugify\Infra\SlugGenerator\AsciiGenerator;
+use Rouffj\Slugify\Infra\SlugGenerator\PassthruGenerator;
+use Rouffj\Slugify\Tests\Fixtures\InMemoryArticle;
+use Rouffj\Slugify\Tests\Fixtures\DoctrineArticle;
 
 class AcceptanceTest extends \PhpUnit_Framework_TestCase
 {
     public function testEntityPassthruSlugification()
     {
         $title = 'Hello slugifier!';
-        $entity = new BasicEntity($title);
-        $entity->slugify(new PassthruGenerator());
-        $this->assertEquals($title, $entity->getSlug());
+        $article = new InMemoryArticle();
+        $article->setTitle($title);
+        $article->slugify(new PassthruGenerator());
+        $this->assertEquals($title, $article->getSlug());
     }
 
     /** @dataProvider getEntityAsciiTextPropertySlugificationTestData */
     public function testEntityAsciiTextSlugification($title, $slug)
     {
-        $entity = new BasicEntity($title);
-        $entity->slugify(new AsciiGenerator());
-        $this->assertEquals($slug, $entity->getSlug());
+        $article = new InMemoryArticle();
+        $article->setTitle($title);
+        $article->slugify(new AsciiGenerator());
+        $this->assertEquals($slug, $article->getSlug());
     }
 
     public function testICouldUseSlugifyWithDoctrineOrm()
@@ -37,16 +38,17 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
         $em2 = EntityManager::create($params, $config);
 
         // Create a new entity which should be slugified
-        $entity1 = new DoctrineEntity('Hello world!');
-        $entity1->slugify(new AsciiGenerator());
+        $persistedArticle = new DoctrineArticle();
+        $persistedArticle->setTitle('Hello world!');
+        $persistedArticle->slugify(new AsciiGenerator());
 
         // Store into database slugified entity
-        $em1->persist($entity1);
+        $em1->persist($persistedArticle);
         $em1->flush();
 
         // Retrieve entity from database
-        $entity2 = $em2->find('Rouffj\Slugify\Tests\Fixtures\DoctrineEntity', $entity1->getId());
-        $this->assertEquals('hello-world', $entity2->getSlug());
+        $loadedArticle = $em2->find('Rouffj\Slugify\Tests\Fixtures\DoctrineArticle', $persistedArticle->getId());
+        $this->assertEquals('hello-world', $loadedArticle->getSlug());
     }
 
     public function getEntityAsciiTextPropertySlugificationTestData()

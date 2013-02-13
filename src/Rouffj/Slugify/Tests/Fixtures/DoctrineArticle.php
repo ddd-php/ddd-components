@@ -12,7 +12,7 @@ use Rouffj\Slugify\Model\SluggableInterface;
 use Rouffj\Slugify\Service\SlugGeneratorInterface;
 
 /** @Entity @Table(name="entity") */
-class DoctrineEntity implements SluggableInterface
+class DoctrineArticle implements SluggableInterface
 {
     /** @Column(type="integer") @GeneratedValue @Id */
     private $id;
@@ -23,11 +23,6 @@ class DoctrineEntity implements SluggableInterface
     /** @Column(type="string") */
     private $slug;
 
-    public function __construct($title)
-    {
-        $this->title = $title;
-    }
-
     public function getId()
     {
         return $this->id;
@@ -36,6 +31,11 @@ class DoctrineEntity implements SluggableInterface
     public function slugify(SlugGeneratorInterface $slugifier)
     {
         $this->slug = $slugifier->slugify(array($this->title));
+    }
+
+    public function setTitle($title)
+    {
+        $this->title = $title;
     }
 
     public function getTitle()
