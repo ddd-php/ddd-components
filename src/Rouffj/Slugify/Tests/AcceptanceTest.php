@@ -4,10 +4,12 @@ namespace Rouffj\Slugify\Tests;
 
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
-use Rouffj\Slugify\Infra\SlugGenerator\AsciiGenerator;
-use Rouffj\Slugify\Infra\SlugGenerator\PassthruGenerator;
 use Rouffj\Slugify\Tests\Fixtures\InMemoryArticle;
 use Rouffj\Slugify\Tests\Fixtures\DoctrineArticle;
+use Rouffj\Slugify\Infra\SlugGenerator\DefaultSlugGenerator;
+use Rouffj\Slugify\Infra\SlugGenerator\PassthruSlugGenerator;
+use Rouffj\Slugify\Infra\Transliterator\LatinTransliterator;
+use Rouffj\Slugify\Infra\Transliterator\PassthruTransliterator;
 
 class AcceptanceTest extends \PhpUnit_Framework_TestCase
 {
@@ -16,7 +18,7 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
         $title = 'Hello slugifier!';
         $article = new InMemoryArticle();
         $article->setTitle($title);
-        $article->slugify(new PassthruGenerator());
+        $article->slugify(new PassthruSlugGenerator());
         $this->assertEquals($title, $article->getSlug());
     }
 
@@ -25,7 +27,7 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
     {
         $article = new InMemoryArticle();
         $article->setTitle($title);
-        $article->slugify(new AsciiGenerator());
+        $article->slugify(new DefaultSlugGenerator(new PassthruTransliterator()));
         $this->assertEquals($slug, $article->getSlug());
     }
 
@@ -42,7 +44,7 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
         // Create a new entity which should be slugified
         $persistedArticle = new DoctrineArticle();
         $persistedArticle->setTitle('Hello world!');
-        $persistedArticle->slugify(new AsciiGenerator());
+        $persistedArticle->slugify(new DefaultSlugGenerator(new PassthruTransliterator()));
 
         // Store into database slugified entity
         $em1->persist($persistedArticle);
@@ -64,6 +66,26 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
             array('hello      world', 'hello-world'),
             array('AbC',              'abc'),
             array('é&tè!hello_(_',    't-hello'),
+        );
+    }
+
+    /** @dataProvider getLatinTransliterationData */
+    public function testEntityLatinTransliteratedSlugification($title, $slug)
+    {
+        $article = new InMemoryArticle();
+        $article->setTitle($title);
+        $article->slugify(new DefaultSlugGenerator(new LatinTransliterator()));
+        $this->assertEquals($slug, $article->getSlug());
+    }
+
+    public function getLatinTransliterationData()
+    {
+        return array(
+            array('hello',    'hello'),
+            array('étrange',  'etrange'),
+            array('habitó',   'habito'),
+            array('straße',   'strasse'),
+            array('señorita', 'senorita'),
         );
     }
 
