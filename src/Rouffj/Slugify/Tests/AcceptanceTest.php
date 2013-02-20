@@ -22,7 +22,7 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
         $this->assertEquals($title, $article->getSlug());
     }
 
-    /** @dataProvider getEntityAsciiTextPropertySlugificationTestData */
+    /** @dataProvider Rouffj\Slugify\Tests\AcceptanceDataProvider::getEntityAsciiTextSlugificationData */
     public function testEntityAsciiTextSlugification($title, $slug)
     {
         $article = new InMemoryArticle();
@@ -57,36 +57,13 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
         $this->restoreDatabase();
     }
 
-    public function getEntityAsciiTextPropertySlugificationTestData()
-    {
-        return array(
-            array('    ',             ''),
-            array('&&&é---',          ''),
-            array('hello world !!',   'hello-world'),
-            array('hello      world', 'hello-world'),
-            array('AbC',              'abc'),
-            array('é&tè!hello_(_',    't-hello'),
-        );
-    }
-
-    /** @dataProvider getLatinTransliterationData */
+    /** @dataProvider Rouffj\Slugify\Tests\AcceptanceDataProvider::getEntityLatinTransliteratedSlugificationData */
     public function testEntityLatinTransliteratedSlugification($title, $slug)
     {
         $article = new InMemoryArticle();
         $article->setTitle($title);
         $article->slugify(new DefaultSlugGenerator(new LatinTransliterator()));
         $this->assertEquals($slug, $article->getSlug());
-    }
-
-    public function getLatinTransliterationData()
-    {
-        return array(
-            array('hello',    'hello'),
-            array('étrange',  'etrange'),
-            array('habitó',   'habito'),
-            array('straße',   'strasse'),
-            array('señorita', 'senorita'),
-        );
     }
 
     private function backupDatabase()
