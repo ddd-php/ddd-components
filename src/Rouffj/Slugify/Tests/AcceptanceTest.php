@@ -33,7 +33,7 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
 
     public function testICouldUseSlugifyWithDoctrineOrm()
     {
-        $this->backupDatabase();
+        TestDatabase::backup();
 
         // Doctrine setup
         $params = array('driver' => 'pdo_sqlite', 'path' => __DIR__.'/Resources/db.sqlite');
@@ -54,7 +54,7 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
         $loadedArticle = $em2->find('Rouffj\Slugify\Tests\Fixtures\DoctrineArticle', $persistedArticle->getId());
         $this->assertEquals('hello-world', $loadedArticle->getSlug());
 
-        $this->restoreDatabase();
+        TestDatabase::restore();
     }
 
     /** @dataProvider Rouffj\Slugify\Tests\AcceptanceDataProvider::getEntityLatinTransliteratedSlugificationData */
@@ -64,15 +64,5 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
         $article->setTitle($title);
         $article->slugify(new DefaultSlugGenerator(new LatinTransliterator()));
         $this->assertEquals($slug, $article->getSlug());
-    }
-
-    private function backupDatabase()
-    {
-        copy(__DIR__.'/Resources/db.sqlite', __DIR__.'/Resources/db.backup');
-    }
-
-    private function restoreDatabase()
-    {
-        rename(__DIR__.'/Resources/db.backup', __DIR__.'/Resources/db.sqlite');
     }
 }
