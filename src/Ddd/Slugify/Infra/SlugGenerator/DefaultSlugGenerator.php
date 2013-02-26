@@ -1,9 +1,9 @@
 <?php
 
-namespace Rouffj\Slugify\Infra\SlugGenerator;
+namespace Ddd\Slugify\Infra\SlugGenerator;
 
-use Rouffj\Slugify\Service\SlugGeneratorInterface;
-use Rouffj\Slugify\Service\TransliteratorInterface;
+use Ddd\Slugify\Service\SlugGeneratorInterface;
+use Ddd\Slugify\Service\TransliteratorInterface;
 
 /**
  * Default text slugifier.

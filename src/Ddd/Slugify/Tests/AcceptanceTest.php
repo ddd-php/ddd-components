@@ -1,15 +1,15 @@
 <?php
 
-namespace Rouffj\Slugify\Tests;
+namespace Ddd\Slugify\Tests;
 
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
-use Rouffj\Slugify\Tests\Fixtures\InMemoryArticle;
-use Rouffj\Slugify\Tests\Fixtures\DoctrineArticle;
-use Rouffj\Slugify\Infra\SlugGenerator\DefaultSlugGenerator;
-use Rouffj\Slugify\Infra\SlugGenerator\PassthruSlugGenerator;
-use Rouffj\Slugify\Infra\Transliterator\LatinTransliterator;
-use Rouffj\Slugify\Infra\Transliterator\PassthruTransliterator;
+use Ddd\Slugify\Tests\Fixtures\InMemoryArticle;
+use Ddd\Slugify\Tests\Fixtures\DoctrineArticle;
+use Ddd\Slugify\Infra\SlugGenerator\DefaultSlugGenerator;
+use Ddd\Slugify\Infra\SlugGenerator\PassthruSlugGenerator;
+use Ddd\Slugify\Infra\Transliterator\LatinTransliterator;
+use Ddd\Slugify\Infra\Transliterator\PassthruTransliterator;
 
 class AcceptanceTest extends \PhpUnit_Framework_TestCase
 {
@@ -22,12 +22,21 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
         $this->assertEquals($title, $article->getSlug());
     }
 
-    /** @dataProvider Rouffj\Slugify\Tests\AcceptanceDataProvider::getEntityAsciiTextSlugificationData */
+    /** @dataProvider Ddd\Slugify\Tests\AcceptanceDataProvider::getEntityAsciiTextSlugificationData */
     public function testEntityAsciiTextSlugification($title, $slug)
     {
         $article = new InMemoryArticle();
         $article->setTitle($title);
         $article->slugify(new DefaultSlugGenerator(new PassthruTransliterator()));
+        $this->assertEquals($slug, $article->getSlug());
+    }
+
+    /** @dataProvider Ddd\Slugify\Tests\AcceptanceDataProvider::getEntityLatinTransliteratedSlugificationData */
+    public function testEntityLatinTransliteratedSlugification($title, $slug)
+    {
+        $article = new InMemoryArticle();
+        $article->setTitle($title);
+        $article->slugify(new DefaultSlugGenerator(new LatinTransliterator()));
         $this->assertEquals($slug, $article->getSlug());
     }
 
@@ -51,18 +60,9 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
         $em1->flush();
 
         // Retrieve entity from database
-        $loadedArticle = $em2->find('Rouffj\Slugify\Tests\Fixtures\DoctrineArticle', $persistedArticle->getId());
+        $loadedArticle = $em2->find('Ddd\Slugify\Tests\Fixtures\DoctrineArticle', $persistedArticle->getId());
         $this->assertEquals('hello-world', $loadedArticle->getSlug());
 
         TestDatabase::restore();
-    }
-
-    /** @dataProvider Rouffj\Slugify\Tests\AcceptanceDataProvider::getEntityLatinTransliteratedSlugificationData */
-    public function testEntityLatinTransliteratedSlugification($title, $slug)
-    {
-        $article = new InMemoryArticle();
-        $article->setTitle($title);
-        $article->slugify(new DefaultSlugGenerator(new LatinTransliterator()));
-        $this->assertEquals($slug, $article->getSlug());
     }
 }

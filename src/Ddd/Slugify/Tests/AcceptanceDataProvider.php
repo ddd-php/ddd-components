@@ -1,6 +1,6 @@
 <?php
 
-namespace Rouffj\Slugify\Tests;
+namespace Ddd\Slugify\Tests;
 
 class AcceptanceDataProvider
 {
