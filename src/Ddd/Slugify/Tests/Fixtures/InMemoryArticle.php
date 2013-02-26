@@ -1,9 +1,9 @@
 <?php
 
-namespace Rouffj\Slugify\Tests\Fixtures;
+namespace Ddd\Slugify\Tests\Fixtures;
 
-use Rouffj\Slugify\Service\SlugGeneratorInterface;
-use Rouffj\Slugify\Model\SluggableInterface;
+use Ddd\Slugify\Service\SlugGeneratorInterface;
+use Ddd\Slugify\Model\SluggableInterface;
 
 class InMemoryArticle implements SluggableInterface
 {

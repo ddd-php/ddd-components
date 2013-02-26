@@ -13,12 +13,12 @@
 >
     <testsuites>
         <testsuite name="acceptance">
-            <file>./src/Rouffj/Slugify/Tests/AcceptanceTest.php</file>
+            <file>./src/Ddd/Slugify/Tests/AcceptanceTest.php</file>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory>./src/Rouffj/Slugify/</directory>
+            <directory>./src/Ddd/Slugify/</directory>
         </whitelist>
     </filter>
 </phpunit>

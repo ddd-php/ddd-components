@@ -1,8 +1,8 @@
 <?php
 
-namespace Rouffj\Slugify\Model;
+namespace Ddd\Slugify\Model;
 
-use Rouffj\Slugify\Service\SlugGeneratorInterface;
+use Ddd\Slugify\Service\SlugGeneratorInterface;
 
 /**
  * Interface for sluggable entities.

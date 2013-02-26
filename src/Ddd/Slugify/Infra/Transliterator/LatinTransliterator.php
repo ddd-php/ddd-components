@@ -1,8 +1,8 @@
 <?php
 
-namespace Rouffj\Slugify\Infra\Transliterator;
+namespace Ddd\Slugify\Infra\Transliterator;
 
-use Rouffj\Slugify\Service\TransliteratorInterface;
+use Ddd\Slugify\Service\TransliteratorInterface;
 
 /**
  * @author Jean-François Simon <jeanfrancois.simon@sensiolabs.com>

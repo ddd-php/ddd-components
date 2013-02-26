@@ -1,6 +1,6 @@
 <?php
 
-namespace Rouffj\Slugify\Service;
+namespace Ddd\Slugify\Service;
 
 /**
  * Interface for slugifiers.

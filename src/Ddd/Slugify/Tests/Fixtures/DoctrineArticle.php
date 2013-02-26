@@ -1,6 +1,6 @@
 <?php
 
-namespace Rouffj\Slugify\Tests\Fixtures;
+namespace Ddd\Slugify\Tests\Fixtures;
 
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
@@ -8,8 +8,8 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 
-use Rouffj\Slugify\Model\SluggableInterface;
-use Rouffj\Slugify\Service\SlugGeneratorInterface;
+use Ddd\Slugify\Model\SluggableInterface;
+use Ddd\Slugify\Service\SlugGeneratorInterface;
 
 /** @Entity @Table(name="entity") */
 class DoctrineArticle implements SluggableInterface
