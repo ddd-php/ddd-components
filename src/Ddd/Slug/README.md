@@ -1,7 +1,7 @@
 Slug: an agnostic slug generator
 ================================
 
-**Slug** is a component allows to generate slugs easily whatever persistence
+**Slug** is a component which generates slugs easily whatever persistence
 mecanism you use (Propel2, Doctrine2, custom ORM...).
 
 To generate a slug of a string there is always two 2 steps:
