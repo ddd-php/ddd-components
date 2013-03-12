@@ -1,14 +1,14 @@
 {
-    "name": "ddd/slugify",
+    "name": "ddd/slugifier",
     "type": "library",
-    "description": "PHP slugify library.",
-    "keywords": ["slugify"],
+    "description": "An agnostic slug generator.",
+    "keywords": ["slugifier", "slug", "url"],
     "license": "MIT",
     "authors": [
-        ,{
+        {
             "name": "Joseph Rouff",
             "email": "rouffj@gmail.com"
-        }
+        },
         {
             "name": "Jean-François Simon",
             "email": "contact@jfsimon.fr"
