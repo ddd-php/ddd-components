@@ -1,22 +1,22 @@
 Slug: an agnostic slug generator
 ================================
 
-*Slug* is a component which allows to generate slugs easily whatever persistence
+**Slug** is a component allows to generate slugs easily whatever persistence
 mecanism you use (Propel2, Doctrine2, custom ORM...).
 
 To generate a slug of a string there is always two 2 steps:
 
-- The transliteration step which convert a given string from any writing system
+- The transliteration step which converts a given string from any writing system
   (French, Deutsh, Greek, Arabic...) into its ASCII representation.
-- The slug generation step which basically separate each word and field by a custom delimiter.
+- The slug generation step which basically separates each word and field by a custom delimiter.
 
-Therefore *Slug* component has 2 services: `TransliteratorInterface` and `SlugGeneratorInterface`. Each of these services
+Therefore **Slug** component has 2 services: `TransliteratorInterface` and `SlugGeneratorInterface`. Each of these services
 can have multiple implementations:
 
-- `LatinTransliterator` allow to transliterate a string written in any Latin
+- `LatinTransliterator`: Transliterate a string written in any Latin
   alphabet (French, Deutsh, Spanish...) into its ASCII equivalent.
-- `DefaultSlugGenerator` allow to customize the word and field separator.
-- `PatternSlugGenerator` allow a complete customization of slug generation.
+- `DefaultSlugGenerator`: Customize the word and field separator.
+- `PatternSlugGenerator`: Complete customization of slug generation.
 
 Installation
 ------------
