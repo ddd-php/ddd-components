@@ -1,16 +1,17 @@
 {
-    "name": "rouffj/slugify",
+    "name": "ddd/slugify",
     "type": "library",
     "description": "PHP slugify library.",
     "keywords": ["slugify"],
     "license": "MIT",
     "authors": [
+        ,{
+            "name": "Joseph Rouff",
+            "email": "rouffj@gmail.com"
+        }
         {
             "name": "Jean-François Simon",
             "email": "contact@jfsimon.fr"
-        },{
-            "name": "Joseph Rouff",
-            "email": "rouffj@gmail.com"
         }
     ],
     "require": {
