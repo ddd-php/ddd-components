@@ -1,7 +1,4 @@
-PHP agnostic slugifier
-======================
+Domain Driven Design components
+===============================
 
--  Fetch it: `git clone https://github.com/rouffj/rouffj-slugify.git`
--  Init it: `composer install`
--  Test it: `phpunit`
--  Use it: `$slugifier->slugify($entity);`
+- [Slugify](https://github.com/ddd-php/components/tree/master/src/Ddd/Slugify): An agnostic slug generator.
