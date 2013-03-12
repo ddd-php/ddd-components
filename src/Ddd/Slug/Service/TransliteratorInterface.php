@@ -5,6 +5,7 @@ namespace Ddd\Slug\Service;
 /**
  * String transliterator.
  *
+ * @author Joseph Rouff <rouffj@gmail.com>
  * @author Jean-François Simon <jeanfrancois.simon@sensiolabs.com>
  */
 interface TransliteratorInterface

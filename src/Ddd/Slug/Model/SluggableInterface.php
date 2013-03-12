@@ -7,6 +7,7 @@ use Ddd\Slug\Service\SlugGeneratorInterface;
 /**
  * Interface for sluggable entities.
  *
+ * @author Joseph Rouff <rouffj@gmail.com>
  * @author Jean-François Simon <jeanfrancois.simon@sensiolabs.com>
  */
 interface SluggableInterface

@@ -5,6 +5,7 @@ namespace Ddd\Slug\Infra\Transliterator;
 use Ddd\Slug\Service\TransliteratorInterface;
 
 /**
+ * @author Joseph Rouff <rouffj@gmail.com>
  * @author Jean-François Simon <jeanfrancois.simon@sensiolabs.com>
  */
 class LatinTransliterator implements TransliteratorInterface

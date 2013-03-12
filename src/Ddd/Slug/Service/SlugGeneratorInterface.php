@@ -5,6 +5,7 @@ namespace Ddd\Slug\Service;
 /**
  * Interface for slugifiers.
  *
+ * @author Joseph Rouff <rouffj@gmail.com>
  * @author Jean-François Simon <jeanfrancois.simon@sensiolabs.com>
  */
 interface SlugGeneratorInterface

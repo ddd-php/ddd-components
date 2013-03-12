@@ -8,6 +8,7 @@ use Ddd\Slug\Service\TransliteratorInterface;
 /**
  * Default text slugifier.
  *
+ * @author Joseph Rouff <rouffj@gmail.com>
  * @author Jean-François Simon <jeanfrancois.simon@sensiolabs.com>
  */
 class DefaultSlugGenerator implements SlugGeneratorInterface
