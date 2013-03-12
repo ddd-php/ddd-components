@@ -23,7 +23,7 @@ class AcceptanceDataProvider
             array('étrange',  'etrange'),
             array('habitó',   'habito'),
             array('straße',   'strasse'),
-            array('señorita', 'senorita'),
+            array('señorita-holla', 'senorita-holla'),
         );
     }
 }

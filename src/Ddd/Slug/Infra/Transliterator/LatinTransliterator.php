@@ -16,6 +16,13 @@ class LatinTransliterator implements TransliteratorInterface
     private $inputEncoding;
 
     /**
+     * @todo: enumerate here all possible accents
+     */
+    private $availableAccents = array(
+        '\'', '`', '^', '~'
+    );
+
+    /**
      * @param string $inputEncoding
      */
     public function __construct($inputEncoding = 'utf-8')
@@ -28,6 +35,13 @@ class LatinTransliterator implements TransliteratorInterface
      */
     public function transliterate($string)
     {
-        return iconv($this->inputEncoding, 'us-ascii//TRANSLIT', $string);
+        $transliteration = iconv($this->inputEncoding, 'us-ascii//TRANSLIT', $string);
+
+        return ('Darwin' === PHP_OS) ? $this->removeAloneAccents($transliteration) : $transliterate;
+    }
+
+    private function removeAloneAccents($transliteration)
+    {
+        return str_replace($this->availableAccents, '', $transliteration);
     }
 }

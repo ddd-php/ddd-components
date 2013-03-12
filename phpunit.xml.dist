@@ -13,12 +13,12 @@
 >
     <testsuites>
         <testsuite name="acceptance">
-            <file>./src/Ddd/Slugify/Tests/AcceptanceTest.php</file>
+            <file>./src/Ddd/Slug/Tests/AcceptanceTest.php</file>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory>./src/Ddd/Slugify/</directory>
+            <directory>./src/Ddd/Slug/</directory>
         </whitelist>
     </filter>
 </phpunit>
