@@ -1,7 +1,7 @@
-Slugify, an agnostic slug generator
-===================================
+Slug: an agnostic slug generator
+================================
 
-Slugify is a library which allows to generate slugs easily whatever persistence
+*Slug* is a component which allows to generate slugs easily whatever persistence
 mecanism you use (Propel2, Doctrine2, custom ORM...).
 
 To generate a slug of a string there is always two 2 steps:
@@ -10,15 +10,23 @@ To generate a slug of a string there is always two 2 steps:
   (French, Deutsh, Greek, Arabic...) into its ASCII representation.
 - The slug generation step which basically separate each word and field by a custom delimiter.
 
+Therefore *Slug* component has 2 services: `TransliteratorInterface` and `SlugGeneratorInterface`. Each of these services
+can have multiple implementations:
+
+- `LatinTransliterator` allow to transliterate a string written in any Latin
+  alphabet (French, Deutsh, Spanish...) into its ASCII equivalent.
+- `DefaultSlugGenerator` allow to customize the word and field separator.
+- `PatternSlugGenerator` allow a complete customization of slug generation.
+
 Installation
 ------------
 
-Using Composer, just require the `ddd/slug` package:
+Using Composer, just require the `ddd/components` package:
 
 ``` javascript
 {
     "require": {
-        "ddd/slug": "dev-master"
+        "ddd/components": "dev-master"
     }
 }
 ```
