@@ -1,15 +1,15 @@
 <?php
 
-namespace Ddd\Slugify\Tests;
+namespace Ddd\Slug\Tests;
 
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
-use Ddd\Slugify\Tests\Fixtures\InMemoryArticle;
-use Ddd\Slugify\Tests\Fixtures\DoctrineArticle;
-use Ddd\Slugify\Infra\SlugGenerator\DefaultSlugGenerator;
-use Ddd\Slugify\Infra\SlugGenerator\PassthruSlugGenerator;
-use Ddd\Slugify\Infra\Transliterator\LatinTransliterator;
-use Ddd\Slugify\Infra\Transliterator\PassthruTransliterator;
+use Ddd\Slug\Tests\Fixtures\InMemoryArticle;
+use Ddd\Slug\Tests\Fixtures\DoctrineArticle;
+use Ddd\Slug\Infra\SlugGenerator\DefaultSlugGenerator;
+use Ddd\Slug\Infra\SlugGenerator\PassthruSlugGenerator;
+use Ddd\Slug\Infra\Transliterator\LatinTransliterator;
+use Ddd\Slug\Infra\Transliterator\PassthruTransliterator;
 
 class AcceptanceTest extends \PhpUnit_Framework_TestCase
 {
@@ -22,7 +22,7 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
         $this->assertEquals($title, $article->getSlug());
     }
 
-    /** @dataProvider Ddd\Slugify\Tests\AcceptanceDataProvider::getEntityAsciiTextSlugificationData */
+    /** @dataProvider Ddd\Slug\Tests\AcceptanceDataProvider::getEntityAsciiTextSlugificationData */
     public function testEntityAsciiTextSlugification($title, $slug)
     {
         $article = new InMemoryArticle();
@@ -31,7 +31,7 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
         $this->assertEquals($slug, $article->getSlug());
     }
 
-    /** @dataProvider Ddd\Slugify\Tests\AcceptanceDataProvider::getEntityLatinTransliteratedSlugificationData */
+    /** @dataProvider Ddd\Slug\Tests\AcceptanceDataProvider::getEntityLatinTransliteratedSlugificationData */
     public function testEntityLatinTransliteratedSlugification($title, $slug)
     {
         $article = new InMemoryArticle();
@@ -60,7 +60,7 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
         $em1->flush();
 
         // Retrieve entity from database
-        $loadedArticle = $em2->find('Ddd\Slugify\Tests\Fixtures\DoctrineArticle', $persistedArticle->getId());
+        $loadedArticle = $em2->find('Ddd\Slug\Tests\Fixtures\DoctrineArticle', $persistedArticle->getId());
         $this->assertEquals('hello-world', $loadedArticle->getSlug());
 
         TestDatabase::restore();

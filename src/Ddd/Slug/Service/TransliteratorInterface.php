@@ -1,6 +1,6 @@
 <?php
 
-namespace Ddd\Slugify\Service;
+namespace Ddd\Slug\Service;
 
 /**
  * String transliterator.

@@ -1,8 +1,8 @@
 <?php
 
-namespace Ddd\Slugify\Infra\Transliterator;
+namespace Ddd\Slug\Infra\Transliterator;
 
-use Ddd\Slugify\Service\TransliteratorInterface;
+use Ddd\Slug\Service\TransliteratorInterface;
 
 /**
  * @author Jean-François Simon <jeanfrancois.simon@sensiolabs.com>

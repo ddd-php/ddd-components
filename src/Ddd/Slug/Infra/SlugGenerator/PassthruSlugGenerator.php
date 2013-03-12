@@ -1,8 +1,8 @@
 <?php
 
-namespace Ddd\Slugify\Infra\SlugGenerator;
+namespace Ddd\Slug\Infra\SlugGenerator;
 
-use Ddd\Slugify\Service\SlugGeneratorInterface;
+use Ddd\Slug\Service\SlugGeneratorInterface;
 
 /**
  * Passthru slugifier returning joined values.

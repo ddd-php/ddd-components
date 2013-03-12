@@ -1,9 +1,9 @@
 <?php
 
-namespace Ddd\Slugify\Tests\Fixtures;
+namespace Ddd\Slug\Tests\Fixtures;
 
-use Ddd\Slugify\Service\SlugGeneratorInterface;
-use Ddd\Slugify\Model\SluggableInterface;
+use Ddd\Slug\Service\SlugGeneratorInterface;
+use Ddd\Slug\Model\SluggableInterface;
 
 class InMemoryArticle implements SluggableInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ddd\Slugify\Tests;
+namespace Ddd\Slug\Tests;
 
 class TestDatabase
 {

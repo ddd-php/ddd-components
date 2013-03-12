@@ -13,12 +13,12 @@ To generate a slug of a string there is always two 2 steps:
 Installation
 ------------
 
-Using Composer, just require the `ddd/slugify` package:
+Using Composer, just require the `ddd/slug` package:
 
 ``` javascript
 {
     "require": {
-        "ddd/slugify": "dev-master"
+        "ddd/slug": "dev-master"
     }
 }
 ```
@@ -31,8 +31,8 @@ To be able to slugify an entity or model, you just have to implement the `Slugga
 ``` php
 <?php
 
-use Ddd\Slugify\Model\SluggableInterface;
-use Ddd\Slugify\Service\SlugGeneratorInterface;
+use Ddd\Slug\Model\SluggableInterface;
+use Ddd\Slug\Service\SlugGeneratorInterface;
 
 class Article implements SluggableInterface
 {
@@ -52,8 +52,8 @@ class Article implements SluggableInterface
 Then you just have to call the `slugify` method to generate the slug:
 
 ``` php
-use Ddd\Slugify\Infra\SlugGenerator\DefaultSlugGenerator;
-use Ddd\Slugify\Infra\Transliterator\LatinTransliterator;
+use Ddd\Slug\Infra\SlugGenerator\DefaultSlugGenerator;
+use Ddd\Slug\Infra\Transliterator\LatinTransliterator;
 
 $article = new Article();
 $article->setTitle('Hello world!');

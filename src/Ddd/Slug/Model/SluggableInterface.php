@@ -1,8 +1,8 @@
 <?php
 
-namespace Ddd\Slugify\Model;
+namespace Ddd\Slug\Model;
 
-use Ddd\Slugify\Service\SlugGeneratorInterface;
+use Ddd\Slug\Service\SlugGeneratorInterface;
 
 /**
  * Interface for sluggable entities.
