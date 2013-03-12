@@ -1,7 +1,7 @@
 {
-    "name": "ddd/slugifier",
+    "name": "ddd/components",
     "type": "library",
-    "description": "An agnostic slug generator.",
+    "description": "Domain Driven Design components (Slug).",
     "keywords": ["slugifier", "slug", "url"],
     "license": "MIT",
     "authors": [
@@ -21,6 +21,6 @@
         "doctrine/orm": "2.3"
     },
     "autoload": {
-        "psr-0": { "Ddd\\Slugify": "src/" }
+        "psr-0": { "Ddd\\Slug": "src/" }
     }
 }
