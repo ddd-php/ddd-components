@@ -2,8 +2,9 @@ Slugify, an agnostic slug generator
 ===================================
 
 Slugify is a library which allows to generate slugs easily whatever persistence
-mecanism you use (Propel2, Doctrine2, custom ORM...). To generate a slug of a
-string there is always two 2 steps:
+mecanism you use (Propel2, Doctrine2, custom ORM...).
+
+To generate a slug of a string there is always two 2 steps:
 
 - The transliteration step which convert a given string from any writing system
   (French, Deutsh, Greek, Arabic...) into its ASCII representation.
@@ -60,3 +61,9 @@ $article->slugify(new DefaultSlugGenerator(new LatinTransliterator()));
 
 echo $article->getSlug(); // writes "2013-hello-world"
 ```
+
+Credits
+-------
+
+- Joseph Rouff <rouffj@gmail.com>
+- Jean-François Simon <contact@jfsimon.fr>
