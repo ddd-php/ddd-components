@@ -1,5 +1,5 @@
 {
-    "name": "ddd/components",
+    "name": "ddd/ddd-components",
     "type": "library",
     "description": "Domain Driven Design components (Slug).",
     "keywords": ["slugifier", "slug", "url"],
