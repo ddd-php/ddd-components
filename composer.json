@@ -1,8 +1,8 @@
 {
     "name": "ddd/components",
     "type": "library",
-    "description": "Domain Driven Design components (Slug).",
-    "keywords": ["slugifier", "slug", "url"],
+    "description": "Domain Driven Design components (Slug...).",
+    "keywords": ["slugifier", "slug", "url", "DDD", "Domain Driven Design"],
     "license": "MIT",
     "authors": [
         {
