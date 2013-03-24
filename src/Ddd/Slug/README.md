@@ -65,7 +65,7 @@ use Ddd\Slug\Infra\Transliterator\LatinTransliterator;
 
 $article = new Article();
 $article->setTitle('Hello world!');
-$article->slugify(new DefaultSlugGenerator(new LatinTransliterator()));
+$article->slugify(new DefaultSlugGenerator(array(new LatinTransliterator())));
 
 echo $article->getSlug(); // writes "2013-hello-world"
 ```
