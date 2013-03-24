@@ -21,7 +21,7 @@ class DefaultSlugGenerator implements SlugGeneratorInterface
     private $transliterators = array();
 
     /**
-     * @var string
+     * @var array
      */
     private $options = array(
         'word_separator' => '-',
@@ -30,7 +30,7 @@ class DefaultSlugGenerator implements SlugGeneratorInterface
     );
 
     /**
-     * @param TransliteratorInterface $transliterator
+     * @param TransliteratorInterface[] $transliterators
      */
     public function __construct(array $transliterators)
     {
