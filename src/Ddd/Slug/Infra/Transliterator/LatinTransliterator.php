@@ -40,6 +40,11 @@ class LatinTransliterator implements TransliteratorInterface
         return ('Darwin' === PHP_OS) ? $this->removeAloneAccents($transliteration) : $transliterate;
     }
 
+    public function getName()
+    {
+        return 'latin';
+    }
+
     private function removeAloneAccents($transliteration)
     {
         return str_replace($this->availableAccents, '', $transliteration);

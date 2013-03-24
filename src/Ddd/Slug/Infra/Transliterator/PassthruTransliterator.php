@@ -16,4 +16,9 @@ class PassthruTransliterator implements TransliteratorInterface
     {
         return $string;
     }
+
+    public function getName()
+    {
+        return 'passthru';
+    }
 }

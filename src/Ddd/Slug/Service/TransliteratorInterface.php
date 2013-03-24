@@ -18,4 +18,11 @@ interface TransliteratorInterface
      * @return string
      */
     public function transliterate($string);
+
+    /**
+     * Name of the transliterator
+     *
+     * @return string
+     */
+    public function getName();
 }
