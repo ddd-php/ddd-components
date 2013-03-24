@@ -13,12 +13,22 @@ use Ddd\Slug\Infra\Transliterator\PassthruTransliterator;
 
 class AcceptanceTest extends \PhpUnit_Framework_TestCase
 {
+    private $defaultSlugGenerator;
+    private $passthruSlugGenerator;
+
+    protected function setUp()
+    {
+        $transliterators =  array(new PassthruTransliterator(), new LatinTransliterator());
+        $this->defaultSlugGenerator = new DefaultSlugGenerator($transliterators);
+        $this->passthruSlugGenerator = new PassthruSlugGenerator();
+    }
+
     public function testEntityPassthruSlugification()
     {
-        $title = 'Hello slugifier!';
+        $title = 'Héllo slugifier!';
         $article = new InMemoryArticle();
         $article->setTitle($title);
-        $article->slugify(new PassthruSlugGenerator());
+        $article->slugify($this->passthruSlugGenerator);
         $this->assertEquals($title, $article->getSlug());
     }
 
@@ -27,7 +37,7 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
     {
         $article = new InMemoryArticle();
         $article->setTitle($title);
-        $article->slugify(new DefaultSlugGenerator(new PassthruTransliterator()));
+        $article->slugify($this->defaultSlugGenerator);
         $this->assertEquals($slug, $article->getSlug());
     }
 
@@ -36,7 +46,7 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
     {
         $article = new InMemoryArticle();
         $article->setTitle($title);
-        $article->slugify(new DefaultSlugGenerator(new LatinTransliterator()));
+        $article->slugify($this->defaultSlugGenerator);
         $this->assertEquals($slug, $article->getSlug());
     }
 
@@ -53,7 +63,7 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
         // Create a new entity which should be slugified
         $persistedArticle = new DoctrineArticle();
         $persistedArticle->setTitle('Hello world!');
-        $persistedArticle->slugify(new DefaultSlugGenerator(new PassthruTransliterator()));
+        $persistedArticle->slugify($this->defaultSlugGenerator);
 
         // Store into database slugified entity
         $em1->persist($persistedArticle);
