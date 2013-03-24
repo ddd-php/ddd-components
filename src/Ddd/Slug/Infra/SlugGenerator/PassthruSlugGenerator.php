@@ -14,7 +14,7 @@ class PassthruSlugGenerator implements SlugGeneratorInterface
     /**
      * {@inheritdoc}
      */
-    public function slugify(array $fieldValues)
+    public function slugify(array $fieldValues, array $options = array())
     {
         return implode('', $fieldValues);
     }

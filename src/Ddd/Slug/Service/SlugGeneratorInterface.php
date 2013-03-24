@@ -14,8 +14,9 @@ interface SlugGeneratorInterface
      * Slugifies an array of string values.
      *
      * @param array $fieldValues
+     * @param array $options      See implementations for available options
      *
      * @return string
      */
-    public function slugify(array $fieldValues);
+    public function slugify(array $fieldValues, array $options = array());
 }

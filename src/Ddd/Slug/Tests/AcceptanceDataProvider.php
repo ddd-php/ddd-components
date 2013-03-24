@@ -8,11 +8,11 @@ class AcceptanceDataProvider
     {
         return array(
             array('    ',             ''),
-            array('&&&é---',          ''),
+            array('&&&é---',          'e'),
             array('hello world !!',   'hello-world'),
             array('hello      world', 'hello-world'),
             array('AbC',              'abc'),
-            array('é&tè!hello_(_',    't-hello'),
+            array('é&tè!hello_(_',    'e-te-hello'),
         );
     }
 
