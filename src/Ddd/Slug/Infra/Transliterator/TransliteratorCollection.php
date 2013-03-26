@@ -37,6 +37,29 @@ class TransliteratorCollection
     }
 
     /**
+     * Transliterates string with named transliterator.
+     *
+     * @param string $name   Transliterator name
+     * @param string $string String to transliterate
+     *
+     * @throws \InvalidArgumentException If transliterator not found
+     *
+     * @return string Transliterated string
+     */
+    public function trasnliterate($name, $string)
+    {
+        if (!isset($this->transliterators[$name])) {
+            throw new \InvalidArgumentException(sprintf(
+                'Unknwon transliterator "%s", known ones are "%s".',
+                $name,
+                implode('", "', array_keys($this->transliterators))
+            ));
+        }
+
+        return $this->transliterators[$name]->transliterate($string);
+    }
+
+    /**
      * @param string $name
      *
      * @return boolean

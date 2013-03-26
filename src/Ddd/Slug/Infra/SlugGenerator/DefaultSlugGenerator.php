@@ -75,7 +75,6 @@ class DefaultSlugGenerator implements SlugGeneratorInterface
     {
         return $this
             ->transliterators
-            ->get($this->options['transliterator'])
             ->transliterate(implode($this->options['field_separator'], $fieldValues));
     }
 
