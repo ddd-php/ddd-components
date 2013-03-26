@@ -2,8 +2,8 @@
 
 namespace Ddd\Slug\Infra\SlugGenerator;
 
+use Ddd\Slug\Infra\Transliterator\TransliteratorCollection;
 use Ddd\Slug\Service\SlugGeneratorInterface;
-use Ddd\Slug\Service\TransliteratorInterface;
 
 /**
  * Default text slugifier.
@@ -16,23 +16,23 @@ class DefaultSlugGenerator implements SlugGeneratorInterface
     const REPLACED_CHARS = '~[^a-z0-9]~i';
 
     /**
-     * @var TransliteratorInterface[]
+     * @var TransliteratorCollection
      */
-    private $transliterators = array();
+    private $transliterators;
 
     /**
      * @var array
      */
-    private $options = array(
-        'word_separator' => '-',
+    private $defaultOptions = array(
+        'word_separator'  => '-',
         'field_separator' => '-',
-        'transliterator' => 'latin',
+        'transliterator'  => 'latin',
     );
 
     /**
-     * @param TransliteratorInterface[] $transliterators
+     * @param TransliteratorCollection $transliterators
      */
-    public function __construct(array $transliterators)
+    public function __construct(TransliteratorCollection $transliterators)
     {
         $this->transliterators = $transliterators;
     }
@@ -42,53 +42,48 @@ class DefaultSlugGenerator implements SlugGeneratorInterface
      */
     public function slugify(array $fieldValues, array $options = array())
     {
+        $options = array_merge($this->defaultOptions, $options);
+
         if (!$this->validateOptions($options)) {
             throw new \InvalidArgumentException('Some of given options are not expected');
         }
-        $this->options = array_merge($this->options, $options);
 
-        if (null === $stringToSlugify = $this->transliterate($fieldValues)) {
-            throw new \InvalidArgumentException(sprintf('given transliterator "%s" is not found', $this->options['transliterator']));
-        }
-        $slug = $this->replaceUnwantedChars($stringToSlugify);
-        $slug = $this->removeDuplicateWordSeparators($slug);
+        $stringToSlugify = $this->transliterators->transliterate($options['transliterator'], implode($options['field_separator'], $fieldValues));
+        $slug = $this->replaceUnwantedChars($stringToSlugify, $options['word_separator']);
+        $slug = $this->removeDuplicateWordSeparators($slug, $options['word_separator']);
 
-        return trim(strtolower($slug), $this->options['word_separator']);
+        return trim(strtolower($slug), $options['word_separator']);
     }
 
-    private function transliterate(array $fieldValues)
+    /**
+     * @param array $options
+     *
+     * @return bool
+     */
+    public function validateOptions(array $options)
     {
-        foreach ($this->transliterators as $transliterator) {
-            if ($this->options['transliterator'] === $transliterator->getName()) {
-                $stringToSlugify = $transliterator->transliterate(implode($this->options['field_separator'], $fieldValues));
-            }
-        }
-
-        return $stringToSlugify;
+        return true;
     }
 
     /**
      * @param string $stringToSlugify
+     * @param string $wordSeparator
      *
      * @return string
      */
-    private function replaceUnwantedChars($stringToSlugify)
+    private function replaceUnwantedChars($stringToSlugify, $wordSeparator)
     {
-        return preg_replace(self::REPLACED_CHARS, $this->options['word_separator'], $stringToSlugify);
+        return preg_replace(self::REPLACED_CHARS, $wordSeparator, $stringToSlugify);
     }
 
     /**
      * @param string $slug
+     * @param string $wordSeparator
      *
      * @return string
      */
-    private function removeDuplicateWordSeparators($slug)
+    private function removeDuplicateWordSeparators($slug, $wordSeparator)
     {
-        return preg_replace('~['.preg_quote($this->options['word_separator']).']+~', $this->options['word_separator'], $slug);
-    }
-
-    public function validateOptions(array $options)
-    {
-        return true;
+        return preg_replace('~['.preg_quote($wordSeparator).']+~', $wordSeparator, $slug);
     }
 }
