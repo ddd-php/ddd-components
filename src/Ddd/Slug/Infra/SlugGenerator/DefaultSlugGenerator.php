@@ -48,9 +48,7 @@ class DefaultSlugGenerator implements SlugGeneratorInterface
             throw new \InvalidArgumentException('Some of given options are not expected');
         }
 
-        $transliteratedValues = $this->transliterate($fieldValues, $options['transliterator']);
-        $stringToSlugify = implode($options['field_separator'], $transliteratedValues);
-
+        $stringToSlugify = $this->transliterate($fieldValues, $options['transliterator']);
         $slug = $this->replaceUnwantedChars($stringToSlugify, $options['word_separator']);
         $slug = $this->removeDuplicateWordSeparators($slug, $options['word_separator']);
 
@@ -68,17 +66,15 @@ class DefaultSlugGenerator implements SlugGeneratorInterface
     }
 
     /**
-     * @param array  $fieldValues
-     * @param string $transliteratorName
-     * @return array
+     * @param array $fieldValues
+     *
+     * @return string
      */
     private function transliterate(array $fieldValues, $transliteratorName)
     {
-        $transliterators = $this->transliterators;
-
-        return array_map(function ($fieldValue) use ($transliterators, $transliteratorName) {
-            return $transliterators->transliterate($transliteratorName, $fieldValue);
-        }, $fieldValues);
+        return $this
+            ->transliterators
+            ->transliterate($transliteratorName, implode($this->options['field_separator'], $fieldValues));
     }
 
     /**
