@@ -46,7 +46,7 @@ class TransliteratorCollection
      *
      * @return string Transliterated string
      */
-    public function trasnliterate($name, $string)
+    public function transliterate($name, $string)
     {
         if (!isset($this->transliterators[$name])) {
             throw new \InvalidArgumentException(sprintf(
