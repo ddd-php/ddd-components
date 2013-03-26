@@ -37,7 +37,7 @@ class LatinTransliterator implements TransliteratorInterface
     {
         $transliteration = iconv($this->inputEncoding, 'us-ascii//TRANSLIT', $string);
 
-        return ('Darwin' === PHP_OS) ? $this->removeAloneAccents($transliteration) : $transliterate;
+        return ('Darwin' === PHP_OS) ? $this->removeAloneAccents($transliteration) : $transliteration;
     }
 
     public function getName()
