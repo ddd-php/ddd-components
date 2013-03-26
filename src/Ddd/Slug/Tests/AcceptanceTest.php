@@ -2,6 +2,7 @@
 
 namespace Ddd\Slug\Tests;
 
+use Ddd\Slug\Infra\Transliterator\TransliteratorCollection;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 use Ddd\Slug\Tests\Fixtures\InMemoryArticle;
@@ -18,7 +19,7 @@ class AcceptanceTest extends \PhpUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $transliterators =  array(new PassthruTransliterator(), new LatinTransliterator());
+        $transliterators = new TransliteratorCollection(array(new PassthruTransliterator(), new LatinTransliterator()));
         $this->defaultSlugGenerator = new DefaultSlugGenerator($transliterators);
         $this->passthruSlugGenerator = new PassthruSlugGenerator();
     }

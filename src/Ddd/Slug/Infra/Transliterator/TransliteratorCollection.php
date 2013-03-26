@@ -15,6 +15,16 @@ class TransliteratorCollection
     private $transliterators = array();
 
     /**
+     * @param TransliteratorInterface[] $transliterators
+     */
+    public function __construct(array $transliterators)
+    {
+        foreach ($transliterators as $transliterator) {
+            $this->add($transliterator);
+        }
+    }
+
+    /**
      * @param TransliteratorInterface $transliterator
      *
      * @return TransliteratorCollection
