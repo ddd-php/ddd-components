@@ -23,7 +23,7 @@ class DefaultSlugGenerator implements SlugGeneratorInterface
     /**
      * @var array
      */
-    private $options = array(
+    private $defaultOptions = array(
         'word_separator'  => '-',
         'field_separator' => '-',
         'transliterator'  => 'latin',
@@ -42,18 +42,19 @@ class DefaultSlugGenerator implements SlugGeneratorInterface
      */
     public function slugify(array $fieldValues, array $options = array())
     {
+        $options = array_merge($this->defaultOptions, $options);
+
         if (!$this->validateOptions($options)) {
             throw new \InvalidArgumentException('Some of given options are not expected');
         }
-        $this->options = array_merge($this->options, $options);
 
-        $transliteratedValues = $this->transliterate($fieldValues);
-        $stringToSlugify = implode($this->options['word_separator'], $transliteratedValues);
+        $transliteratedValues = $this->transliterate($fieldValues, $options['transliterator']);
+        $stringToSlugify = implode($options['field_separator'], $transliteratedValues);
 
-        $slug = $this->replaceUnwantedChars($stringToSlugify);
-        $slug = $this->removeDuplicateWordSeparators($slug);
+        $slug = $this->replaceUnwantedChars($stringToSlugify, $options['word_separator']);
+        $slug = $this->removeDuplicateWordSeparators($slug, $options['word_separator']);
 
-        return trim(strtolower($slug), $this->options['word_separator']);
+        return trim(strtolower($slug), $options['word_separator']);
     }
 
     /**
@@ -67,14 +68,13 @@ class DefaultSlugGenerator implements SlugGeneratorInterface
     }
 
     /**
-     * @param array $fieldValues
-     *
+     * @param array  $fieldValues
+     * @param string $transliteratorName
      * @return array
      */
-    private function transliterate(array $fieldValues)
+    private function transliterate(array $fieldValues, $transliteratorName)
     {
         $transliterators = $this->transliterators;
-        $transliteratorName = $this->options['transliterator'];
 
         return array_map(function ($fieldValue) use ($transliterators, $transliteratorName) {
             return $transliterators->transliterate($transliteratorName, $fieldValue);
@@ -83,21 +83,23 @@ class DefaultSlugGenerator implements SlugGeneratorInterface
 
     /**
      * @param string $stringToSlugify
+     * @param string $wordSeparator
      *
      * @return string
      */
-    private function replaceUnwantedChars($stringToSlugify)
+    private function replaceUnwantedChars($stringToSlugify, $wordSeparator)
     {
-        return preg_replace(self::REPLACED_CHARS, $this->options['word_separator'], $stringToSlugify);
+        return preg_replace(self::REPLACED_CHARS, $wordSeparator, $stringToSlugify);
     }
 
     /**
      * @param string $slug
+     * @param string $wordSeparator
      *
      * @return string
      */
-    private function removeDuplicateWordSeparators($slug)
+    private function removeDuplicateWordSeparators($slug, $wordSeparator)
     {
-        return preg_replace('~['.preg_quote($this->options['word_separator']).']+~', $this->options['word_separator'], $slug);
+        return preg_replace('~['.preg_quote($wordSeparator).']+~', $wordSeparator, $slug);
     }
 }
