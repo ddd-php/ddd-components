@@ -23,18 +23,20 @@ class DefaultSlugGenerator implements SlugGeneratorInterface
     /**
      * @var array
      */
-    private $defaultOptions = array(
-        'word_separator'  => '-',
-        'field_separator' => '-',
-        'transliterator'  => 'latin',
-    );
+    private $defaultOptions;
 
     /**
      * @param TransliteratorCollection $transliterators
+     * @param array                    $defaultOptions
      */
-    public function __construct(TransliteratorCollection $transliterators)
+    public function __construct(TransliteratorCollection $transliterators, array $defaultOptions)
     {
         $this->transliterators = $transliterators;
+        $this->defaultOptions = array_merge(array(
+            'word_separator'  => '-',
+            'field_separator' => '-',
+            'transliterator'  => 'latin',
+        ), $defaultOptions);
     }
 
     /**
