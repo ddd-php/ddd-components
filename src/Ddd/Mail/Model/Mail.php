@@ -30,26 +30,6 @@ abstract class Mail
         $this->recipients[] = $recipient;
     }
 
-    public function getRecipients()
-    {
-        return $this->recipients;
-    }
-
-    public function getFrom()
-    {
-        return $this->from;
-    }
-
-    public function getFailedRecipients()
-    {
-        return $this->failedRecipients;
-    }
-
-    public function isSent()
-    {
-        return $this->sent;
-    }
-
     public function send(MailerInterface $mailer)
     {
         if (null === $this->subject && null === $this->body) {
@@ -64,6 +44,26 @@ abstract class Mail
         if (0 === count($this->failedRecipients)) {
             $this->sent = true;
         }
+    }
+
+    public function isSent()
+    {
+        return $this->sent;
+    }
+
+    public function getRecipients()
+    {
+        return $this->recipients;
+    }
+
+    public function getFrom()
+    {
+        return $this->from;
+    }
+
+    public function getFailedRecipients()
+    {
+        return $this->failedRecipients;
     }
 
     public function getSubject()
