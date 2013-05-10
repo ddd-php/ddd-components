@@ -14,6 +14,7 @@
     <testsuites>
         <testsuite name="acceptance">
             <file>./src/Ddd/Slug/Tests/AcceptanceTest.php</file>
+            <directory>./src/Ddd/Mail/Tests/Acceptance</directory>
         </testsuite>
     </testsuites>
     <filter>
