@@ -21,6 +21,6 @@
         "doctrine/orm": "2.3"
     },
     "autoload": {
-        "psr-0": { "Ddd\\Slug": "src/" }
+        "psr-0": { "Ddd": "src/" }
     }
 }
