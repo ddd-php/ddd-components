@@ -40,7 +40,7 @@ Icebox
 ------
 
 * [x] As a user, I should be able to create a sendable basic email with very simple API.
-* [ ] As a user, I should be able to send basic `TextMail` with SwiftMailer as `MailerInterface` implementation.
+* [x] As a user, I should be able to send basic `TextMail` with SwiftMailer as `MailerInterface` implementation.
 * [ ] As a user, I could give as recipient a group of contacts.
 * [ ] As a user, I could be able to send basic `HtmlEmail` with SwiftMailer.
 * [ ] As a user, I could add attachments to `HtmlEmail`.
