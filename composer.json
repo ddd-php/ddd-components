@@ -15,7 +15,8 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "swiftmailer/swiftmailer": "*"
     },
     "require-dev": {
         "doctrine/orm": "2.3"
