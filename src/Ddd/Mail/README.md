@@ -20,6 +20,22 @@ Using Composer, just require the `ddd/components` package:
 Usage
 -----
 
+```php
+<?php
+
+use Ddd\Mail\Model\TextMail;
+use Ddd\Mail\Model\Contact;
+use Ddd\Mail\Infra\Mailer\SwiftMailer;
+
+// Prepare your email
+$mail = new TextMail(new Contact('support@github.com', 'Github'));
+$mail->compose('[Github] Payment receipt', 'Here my body formatted in Text format');
+$mail->addRecipient(new Contact('customer@gmail.com'));
+
+// Send it whith the any mailer implementation (SwiftMailer, Amazon SES, Compain monitor...)
+$mail->send(new SwiftMailer($container->get('mailer')));
+```
+
 Icebox
 ------
 
