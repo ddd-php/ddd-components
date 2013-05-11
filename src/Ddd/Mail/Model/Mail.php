@@ -13,10 +13,12 @@ abstract class Mail
     private $recipients = array();
     private $failedRecipients = array();
     private $sent = false;
+    private $charset;
 
     public function __construct(Contact $from)
     {
         $this->from = $from;
+        $this->charset = 'utf-8';
     }
 
     public function compose($subject, $body)
@@ -28,26 +30,6 @@ abstract class Mail
     public function addRecipient(Contact $recipient)
     {
         $this->recipients[] = $recipient;
-    }
-
-    public function getRecipients()
-    {
-        return $this->recipients;
-    }
-
-    public function getFrom()
-    {
-        return $this->from;
-    }
-
-    public function getFailedRecipients()
-    {
-        return $this->failedRecipients;
-    }
-
-    public function isSent()
-    {
-        return $this->sent;
     }
 
     public function send(MailerInterface $mailer)
@@ -66,6 +48,26 @@ abstract class Mail
         }
     }
 
+    public function isSent()
+    {
+        return $this->sent;
+    }
+
+    public function getRecipients()
+    {
+        return $this->recipients;
+    }
+
+    public function getFrom()
+    {
+        return $this->from;
+    }
+
+    public function getFailedRecipients()
+    {
+        return $this->failedRecipients;
+    }
+
     public function getSubject()
     {
         return $this->subject;
@@ -74,5 +76,10 @@ abstract class Mail
     public function getBody()
     {
         return $this->body;
+    }
+
+    public function getCharset()
+    {
+        return $this->charset;
     }
 }

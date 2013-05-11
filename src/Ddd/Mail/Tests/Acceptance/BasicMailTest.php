@@ -21,6 +21,7 @@ class BasicMailTest extends \PhpUnit_Framework_TestCase
     {
         $mail = new TextMail($from = new Contact('foo@bar.com'));
 
+        $this->assertEquals('utf-8', $mail->getCharset());
         $this->assertNull($mail->getSubject());
         $this->assertNull($mail->getBody());
         $this->assertEquals($from, $mail->getFrom());
