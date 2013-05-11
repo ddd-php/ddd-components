@@ -20,7 +20,7 @@ class TextMailTest extends \PhpUnit_Framework_TestCase
     public function testWhenSuccessfullySentWithSwiftMailer()
     {
         $swiftMailer = $this->getMock('Swift_Mailer', array(), array(), '', false);
-        $this->mail->compose('Subject', null);
+        $this->mail->compose('Subject', 'Here is the body');
         $this->mail->addRecipient(new Contact('foo@bar.com', 'Foo Bar'));
 
         $swiftMailer->expects($this->once())->method('send');
@@ -28,9 +28,11 @@ class TextMailTest extends \PhpUnit_Framework_TestCase
 
         $msg = $mailer->getSentMessage();
         $this->assertEquals('Subject', $msg->getSubject());
-        $this->assertEquals(null, $msg->getBody());
+        $this->assertEquals('Here is the body', $msg->getBody());
         $this->assertEquals(array('foo@bar.com' => 'Foo Bar'), $msg->getTo());
         $this->assertEquals(array('rouffj@gmail.com' => null), $msg->getFrom());
+        $this->assertEquals('text/plain', $msg->getContentType());
+        $this->assertEquals('utf-8', $msg->getCharset());
         $this->assertEquals(array(), $this->mail->getFailedRecipients());
     }
 

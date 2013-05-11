@@ -32,7 +32,7 @@ $mail = new TextMail(new Contact('support@github.com', 'Github'));
 $mail->compose('[Github] Payment receipt', 'Here my body formatted in Text format');
 $mail->addRecipient(new Contact('customer@gmail.com'));
 
-// Send it whith the any mailer implementation (SwiftMailer, Amazon SES, Compain monitor...)
+// Send it whith the mailer of your choice (SwiftMailer, Amazon SES, Compain monitor...)
 $mail->send(new SwiftMailer($container->get('mailer')));
 ```
 
@@ -50,6 +50,8 @@ Icebox
 * [ ] As a user, I should be able to change default UTF-8 encoding.
 * [ ] As a user, I should be able to send basic `TextMail` with "Amazon SES" as `MailerInterface` implementation.
 * [ ] As a user, I should be able to send basic `TextMail` with "Compaign Monitor" as `MailerInterface` implementation.
+* [ ] As a user, when I put HTML content as body in a `TextMail` the content should be strip of all HTML tags.
+* [ ] As a user, when I put HTML content as body in an `HtmlMail` the plain text version should be generated automatically.
 
 Credits
 -------

@@ -3,6 +3,7 @@
 namespace Ddd\Mail\Infra\Mailer;
 
 use Ddd\Mail\Model\Mail;
+use Ddd\Mail\Model\TextMail;
 use Ddd\Mail\Model\Contact;
 use Ddd\Mail\Service\MailerInterface;
 
@@ -18,21 +19,11 @@ class SwiftMailer implements MailerInterface
 
     public function send(Mail $mail)
     {
-        $recipients = array();
-        foreach ($mail->getRecipients() as $contact) {
-            $recipients[$contact->getEmail()] = $contact->getName();
-        }
-
-        $message = \Swift_Message::newInstance()
-            ->setSubject($mail->getSubject())
-            ->setFrom(array($mail->getFrom()->getEmail() => $mail->getFrom()->getName()))
-            ->setTo($recipients)
-        ;
-
-        $this->message = $message;
+        $swiftMessage = $this->transform($mail);
 
         $failedRecipients = array();
-        $this->mailer->send($message, $failedRecipients);
+        $this->mailer->send($swiftMessage, $failedRecipients);
+        $this->message = $swiftMessage;
 
         $contacts = array();
         foreach ($failedRecipients as $recipient) {
@@ -40,6 +31,27 @@ class SwiftMailer implements MailerInterface
         }
 
         return $contacts;
+    }
+
+    private function transform(Mail $mail)
+    {
+        $recipients = array();
+        foreach ($mail->getRecipients() as $contact) {
+            $recipients[$contact->getEmail()] = $contact->getName();
+        }
+
+        $message = \Swift_Message::newInstance()
+            ->setCharset($mail->getCharset())
+            ->setFrom(array($mail->getFrom()->getEmail() => $mail->getFrom()->getName()))
+            ->setTo($recipients)
+            ->setSubject($mail->getSubject())
+            ->setBody($mail->getBody())
+        ;
+
+        $contentType = ($mail instanceof TextMail) ? 'text/plain' : 'text/html';
+        $message->setContentType($contentType);
+
+        return $message;
     }
 
     /**
