@@ -22,4 +22,9 @@ class Contact
     {
         return $this->name;
     }
+
+    public function toString()
+    {
+        return sprintf("%s <%s>", $this->name, $this->email);
+    }
 }
