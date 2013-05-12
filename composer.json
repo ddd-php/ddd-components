@@ -15,11 +15,16 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0",
-        "swiftmailer/swiftmailer": "*"
+        "php": ">=5.3.0"
+    },
+    "suggest": {
+        "swiftmailer/swiftmailer": "[Mailer] Allow use of SwiftMailer as MailerInterface implementation",
+        "aws/aws-sdk-php": "[Mailer] Allow to use Amazon SES as MailerInterface implementation"
     },
     "require-dev": {
-        "doctrine/orm": "2.3"
+        "doctrine/orm": "2.3",
+        "swiftmailer/swiftmailer": "*",
+        "aws/aws-sdk-php": "*"
     },
     "autoload": {
         "psr-0": { "Ddd": "src/" }
