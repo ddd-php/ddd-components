@@ -52,9 +52,6 @@ class AmazonSesMailer implements MailerInterface
             ),
         );
 
-        //$contentType = ($mail instanceof TextMail) ? 'text/plain' : 'text/html';
-        //$message->setContentType($contentType);
-
         return $message;
     }
 
