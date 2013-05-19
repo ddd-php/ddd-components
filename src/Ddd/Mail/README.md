@@ -1,11 +1,10 @@
-Mail
-====
+# Mail #
+
 
 **Mail** is a component which allow to create/send email easily whatever mailer
 mecanism you use (SwiftMailer...).
 
-Installation
-------------
+## Installation ##
 
 Using Composer, just require the `ddd/components` package:
 
@@ -17,10 +16,9 @@ Using Composer, just require the `ddd/components` package:
 }
 ```
 
-Usage
------
+## Usage ##
 
-First style:
+### 1. Prepare your email ###
 
 ```php
 <?php
@@ -30,20 +28,15 @@ use Ddd\Mail\Model\Contact;
 use Ddd\Mail\Infra\Mailer\SwiftMailer;
 use Ddd\Mail\Infra\Mailer\AmazonSesMailer;
 
-// Prepare your email
 $mail = new TextMail(new Contact('support@github.com', 'Github'));
 $mail
     ->compose('[Github] Payment receipt', 'Here my body formatted in Text format')
     ->addRecipient(new Contact('customer1@gmail.com'))
     ->addRecipient(new Contact('customer2@gmail.com', 'Customer 2'))
 ;
-
-// Send it whith the mailer of your choice (SwiftMailer, Amazon SES, Compain monitor...)
-$mail->send(new SwiftMailer($container->get('swift_mailer'))); // Send email with SwiftMailer.
-$mail->send(new AmazonSesMailer($container->get('aws.ses.client'))); // Send same email with Amazon SES.
 ```
 
-Second style:
+OR:
 
 ```php
 <?php
@@ -53,7 +46,7 @@ use Ddd\Mail\Infra\Mailer\SwiftMailer;
 use Ddd\Mail\Infra\Mailer\AmazonSesMailer;
 
 // Prepare your email
-MailBuilder::create('support@github.com', 'Github')
+$mail = MailBuilder::create('support@github.com', 'Github')
     ->compose('[Github] Payment receipt', 'Here my body formatted in Text format')
     ->addRecipients(array(
         'customer1@gmail.com',
@@ -61,8 +54,11 @@ MailBuilder::create('support@github.com', 'Github')
     ))
     ->getTextMail()
 ;
+```
 
-// Send it whith the mailer of your choice (SwiftMailer, Amazon SES, Compain monitor...)
+### 2. Send it with the mailer of your choice (SwiftMailer, Amazon SES, Compain monitor...) ###
+
+```php
 $mail->send(new SwiftMailer($container->get('swift_mailer'))); // Send email with SwiftMailer.
 $mail->send(new AmazonSesMailer($container->get('aws.ses.client'))); // Send same email with Amazon SES.
 ```
