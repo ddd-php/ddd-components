@@ -20,6 +20,8 @@ Using Composer, just require the `ddd/components` package:
 
 ### 1. Prepare your email ###
 
+#### Method A ####
+
 ```php
 <?php
 
@@ -36,7 +38,7 @@ $mail
 ;
 ```
 
-OR:
+#### Method B ####
 
 ```php
 <?php
@@ -45,7 +47,6 @@ use Ddd\Mail\MailBuilder;
 use Ddd\Mail\Infra\Mailer\SwiftMailer;
 use Ddd\Mail\Infra\Mailer\AmazonSesMailer;
 
-// Prepare your email
 $mail = MailBuilder::create('support@github.com', 'Github')
     ->compose('[Github] Payment receipt', 'Here my body formatted in Text format')
     ->addRecipients(array(
@@ -56,7 +57,9 @@ $mail = MailBuilder::create('support@github.com', 'Github')
 ;
 ```
 
-### 2. Send it with the mailer of your choice (SwiftMailer, Amazon SES, Compain monitor...) ###
+### 2. Send it###
+
+With `Mail` you can send your emails with the mailer of your choice (SwiftMailer, Amazon SES, Compain monitor...):
 
 ```php
 $mail->send(new SwiftMailer($container->get('swift_mailer'))); // Send email with SwiftMailer.
