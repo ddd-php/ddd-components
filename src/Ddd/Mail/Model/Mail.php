@@ -25,11 +25,15 @@ abstract class Mail
     {
         $this->subject = $subject;
         $this->body = $body;
+
+        return $this;
     }
 
     public function addRecipient(Contact $recipient)
     {
         $this->recipients[] = $recipient;
+
+        return $this;
     }
 
     public function send(MailerInterface $mailer)
