@@ -26,12 +26,12 @@ class MailBuilder
     {
         foreach ($recipients as $recipientAddress => $recipientName) {
             if (is_int($recipientAddress)) {
-				$recipient = new Contact($recipientName, null);
+                $recipient = new Contact($recipientName, null);
             } else {
-				$recipient = new Contact($recipientAddress, $recipientName);
+                $recipient = new Contact($recipientAddress, $recipientName);
             }
 
-			$this->recipients[$recipient->getEmail()] = $recipient;
+            $this->recipients[$recipient->getEmail()] = $recipient;
         }
 
         return $this;
@@ -45,14 +45,14 @@ class MailBuilder
         return $this;
     }
 
-	public function getTextMail()
-	{
-		$mail = new TextMail($this->from);
-		$mail->compose($this->subject, $this->body);
-		foreach ($this->recipients as $recipient) {
-			$mail->addRecipient($recipient);
-		}
+    public function getTextMail()
+    {
+        $mail = new TextMail($this->from);
+        $mail->compose($this->subject, $this->body);
+        foreach ($this->recipients as $recipient) {
+            $mail->addRecipient($recipient);
+        }
 
-		return $mail;
-	}
+        return $mail;
+    }
 }
