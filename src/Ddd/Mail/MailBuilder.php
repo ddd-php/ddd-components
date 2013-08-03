@@ -55,14 +55,14 @@ class MailBuilder
         return $mail;
     }
 
-	public function getHtmlMail()
-	{
-		$mail = new HtmlMail($this->from);
-		$mail->compose($this->subject, $this->body);
-		foreach ($this->recipients as $recipientAddress => $recipientName) {
-			$mail->addRecipient(new Contact($recipientAddress, $recipientName));
-		}
+    public function getHtmlMail()
+    {
+        $mail = new HtmlMail($this->from);
+        $mail->compose($this->subject, $this->body);
+        foreach ($this->recipients as $recipient) {
+            $mail->addRecipient($recipient);
+        }
 
-		return $mail;
-	}
+        return $mail;
+    }
 }
