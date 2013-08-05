@@ -13,6 +13,11 @@ class Contact
         $this->name = $name;
     }
 
+    public function __toString()
+    {
+        return sprintf("%s <%s>", $this->name, $this->email);
+    }
+
     public function getEmail()
     {
         return $this->email;
@@ -23,6 +28,10 @@ class Contact
         return $this->name;
     }
 
+    /**
+     * @deprecated In favor of the __toString()
+     * @return string
+     */
     public function toString()
     {
         return sprintf("%s <%s>", $this->name, $this->email);
