@@ -14,6 +14,7 @@ abstract class Mail
     private $failedRecipients = array();
     private $sent = false;
     private $charset;
+    private $attachments = array();
 
     public function __construct(Contact $from)
     {
@@ -32,6 +33,13 @@ abstract class Mail
     public function addRecipient(Contact $recipient)
     {
         $this->recipients[] = $recipient;
+
+        return $this;
+    }
+
+    public function addAttachment(Attachment $attachment)
+    {
+        $this->attachments[$attachment->getPath()] = $attachment;
 
         return $this;
     }
@@ -85,5 +93,10 @@ abstract class Mail
     public function getCharset()
     {
         return $this->charset;
+    }
+
+    public function getAttachments()
+    {
+        return $this->attachments;
     }
 }
