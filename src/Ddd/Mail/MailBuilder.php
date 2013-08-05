@@ -24,11 +24,11 @@ class MailBuilder
 
     public function addRecipients(array $recipients)
     {
-        foreach ($recipients as $recipientAddress => $recipientName) {
-            if (is_int($recipientAddress)) {
-                $recipient = new Contact($recipientName, null);
+        foreach ($recipients as $key => $value) {
+            if (is_int($key)) {
+                $recipient = new Contact($value, null);
             } else {
-                $recipient = new Contact($recipientAddress, $recipientName);
+                $recipient = new Contact($key, $value);
             }
 
             $this->recipients[$recipient->getEmail()] = $recipient;
