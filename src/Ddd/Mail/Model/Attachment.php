@@ -13,6 +13,11 @@ class Attachment
         $this->mimeType = $mimeType;
     }
 
+    public function __toString()
+    {
+        return sprintf("%s", $this->path);
+    }
+
     public function getPath()
     {
         return $this->path;
@@ -21,10 +26,5 @@ class Attachment
     public function getMimeType()
     {
         return $this->mimeType;
-    }
-
-    public function __toString()
-    {
-        return sprintf("%s", $this->path);
     }
 }
