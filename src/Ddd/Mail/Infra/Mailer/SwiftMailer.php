@@ -51,6 +51,10 @@ class SwiftMailer implements MailerInterface
         $contentType = ($mail instanceof TextMail) ? 'text/plain' : 'text/html';
         $message->setContentType($contentType);
 
+        foreach ($mail->getAttachments() as $attach) {
+            $message->attach(\Swift_Attachment::fromPath($attach->getPath(), $attach->getMimeType()));
+        }
+
         return $message;
     }
 
