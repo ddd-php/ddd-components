@@ -76,7 +76,7 @@ Icebox
 * [x] As a user, I should be able to create a mail without knowing any domain object.
 * [ ] As a user, I could give as recipient a group of contacts that will enable "Newsletter" mode.
 * [ ] As a user, I could be able to send basic `HtmlEmail` with SwiftMailer.
-* [ ] As a user, I could add attachments to `HtmlEmail`.
+* [ ] As a user, I could add attachments to `HtmlEmail` AND `TextEmail`.
 * [ ] As a user, I could give copy carbon recipient.
 * [ ] As a user, I could give blind copy carbon recipient.
 * [ ] As a user, a contact should always be valid.
