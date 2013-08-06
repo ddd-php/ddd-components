@@ -12,14 +12,19 @@
     bootstrap="vendor/autoload.php"
 >
     <testsuites>
-        <testsuite name="acceptance">
+        <testsuite name="Mail">
+            <directory suffix="Test.php">./src/Ddd/Mail/Tests/Acceptance</directory>
+        </testsuite>
+        <testsuite name="Slug">
             <file>./src/Ddd/Slug/Tests/AcceptanceTest.php</file>
-            <directory>./src/Ddd/Mail/Tests/Acceptance</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory>./src/Ddd/Slug/</directory>
+            <directory>./src/Ddd</directory>
         </whitelist>
     </filter>
+    <php>
+        <ini name="date.timezone" value="UTC" />
+    </php>
 </phpunit>
