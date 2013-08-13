@@ -1,0 +1,28 @@
+{
+    "name": "ddd/calendar",
+    "type": "library",
+    "description": "",
+    "keywords": ["time","calendar"],
+    "homepage": "https://github.com/ddd-php/Calendar",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joseph ROUFF",
+            "email": "rouffj@gmail.com",
+            "homepage": "http://josephrouff.com"
+        },
+        {
+            "name": "Jean-François Simon",
+            "email": "contact@jfsimon.fr",
+            "homepage": "http://www.jfsimon.fr"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "ddd/time": "*"
+    },
+    "autoload": {
+        "psr-0": { "Ddd\\Calendar": "" }
+    },
+    "target-dir": "Ddd/Calendar"
+}
