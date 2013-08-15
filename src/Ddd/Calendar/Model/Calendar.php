@@ -77,7 +77,7 @@ class Calendar implements CalendarInterface
     /**
      * {@inheritdoc}
      */
-    public function getEventisAfter(TimePoint $point)
+    public function getEventAfter(TimePoint $point)
     {
         foreach ($this->events as $event) {
             if ($event->getInterval()->getBegin()->isAfter($point)) {
