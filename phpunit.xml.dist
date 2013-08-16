@@ -12,11 +12,11 @@
     bootstrap="vendor/autoload.php"
 >
     <testsuites>
-        <testsuite name="Mail">
-            <directory suffix="Test.php">./src/Ddd/Mail/Tests/Acceptance</directory>
+        <testsuite name="all">
+            <directory suffix="Test.php">./src/Ddd/*/Tests/*</directory>
         </testsuite>
-        <testsuite name="Slug">
-            <file>./src/Ddd/Slug/Tests/AcceptanceTest.php</file>
+        <testsuite name="all-howto">
+            <directory suffix="Test.php">./src/Ddd/*/Tests/HowTo</directory>
         </testsuite>
     </testsuites>
     <filter>
