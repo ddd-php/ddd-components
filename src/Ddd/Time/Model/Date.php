@@ -107,6 +107,11 @@ class Date
         return new TimePoint($this->year, $this->month, $this->day, null, null);
     }
 
+    public function toDateInterval()
+    {
+        return new DateInterval($this, $this);
+    }
+
     public function isWeekDay()
     {
         return !$this->isWeekEndDay();

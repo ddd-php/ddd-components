@@ -122,6 +122,11 @@ class TimePoint
         return $dtime;
     }
 
+    public function toTimeInterval()
+    {
+        return new TimeInterval($this, $this);
+    }
+
     public function getDate()
     {
         return $this->date;

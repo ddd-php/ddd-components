@@ -7,6 +7,8 @@ use Ddd\Time\Model\TimePoint;
 use Ddd\Time\Model\Duration;
 use Ddd\Time\Model\TimeUnit;
 use Ddd\Time\Model\Date;
+use Ddd\Time\Factory\DateIntervalFactory;
+use Ddd\Time\Factory\TimeIntervalFactory;
 
 class TimePointTest extends TestCase
 {
@@ -64,5 +66,16 @@ class TimePointTest extends TestCase
         $datetime->setDate(2013, 3, 12);
         $datetime->setTime(18, 27, 11);
         $this->assertEquals($timepoint->toDateTime(), $datetime);
+    }
+
+    public function testHowToKnowIfTimePointIsBeforeDuringAfterATimeInterval()
+    {
+        $doctorAppointment = new TimePoint(2013, 1, 5, 10, 0);
+        $doctorAppointment = $doctorAppointment->toTimeInterval();
+        $samBrithdayParty = TimeIntervalFactory::create('2013-01-05 11:30', '2013-01-05 13:00');
+        $sportSession = TimeIntervalFactory::create('2013-01-05 09:00', '2013-01-05 10:30');
+
+        $this->assertTrue($doctorAppointment->isBefore($samBrithdayParty));
+        $this->assertTrue($doctorAppointment->isDuring($sportSession));
     }
 }

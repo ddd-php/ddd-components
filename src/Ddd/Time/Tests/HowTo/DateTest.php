@@ -7,6 +7,7 @@ use Ddd\Time\Model\TimePoint;
 use Ddd\Time\Model\TimeUnit;
 use Ddd\Time\Tests\TestCase;
 use Ddd\Time\Model\Date;
+use Ddd\Time\Factory\DateIntervalFactory;
 
 class DateTest extends TestCase
 {
@@ -130,5 +131,16 @@ class DateTest extends TestCase
     public function testHowToKnowDiffBetweenItAndATimePoint()
     {
         $this->markTestIncomplete('Should return a composite duration');
+    }
+
+    public function testHowToKnowIfDateIsBeforeDuringAfterADateInterval()
+    {
+        $winterHolidays2013 = DateIntervalFactory::create('2012-12-20', '2013-01-05');
+        $dadVisit = new Date(2012, 12, 29);
+        $dadVisit = $dadVisit->toDateInterval();
+
+        $this->assertTrue($dadVisit->isDuring($winterHolidays2013));
+        $this->assertFalse($dadVisit->isBefore($winterHolidays2013));
+        $this->assertFalse($dadVisit->isAfter($winterHolidays2013));
     }
 }

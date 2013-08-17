@@ -41,7 +41,7 @@ class TimePointTest extends TestCase
         $this->assertTrue($expectedInterval->isEquals($point->until(new TimePoint(2012, 1, 1, 13, 30))));
     }
 
-    public function testGreater()
+    public function testIsAfter()
     {
         $point = new TimePoint(2012, 2, 1, 1, 0, 30);
 
@@ -49,5 +49,14 @@ class TimePointTest extends TestCase
         $this->assertTrue($point->isAfter(new TimePoint(2012, 2, 1, 1, 0, 29)));
         $this->assertFalse($point->isAfter(new TimePoint(2012, 2, 1, 1, 0, 30)));
         $this->assertFalse($point->isAfter(new TimePoint(2012, 2, 1, 1, 0, 31)));
+    }
+
+    public function testToTimePoint()
+    {
+        $point = new TimePoint(2013, 1, 1, 2, 30);
+        $interval = $point->toTimeInterval();
+
+        $this->assertInstanceOf('Ddd\Time\Model\TimeInterval', $interval);
+        $this->assertEquals(new TimeInterval($point, $point), $interval);
     }
 }
