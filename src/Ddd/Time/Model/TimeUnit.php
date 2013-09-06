@@ -4,11 +4,11 @@ namespace Ddd\Time\Model;
 
 class TimeUnit
 {
-    const YEAR = 'Y';
-    const MONTH = 'M';
-    const WEEK = 'W';
-    const DAY = 'D';
-    const HOUR = 'H';
+    const YEAR   = 'Y';
+    const MONTH  = 'M';
+    const WEEK   = 'W';
+    const DAY    = 'D';
+    const HOUR   = 'H';
     const MINUTE = 'I';
     const SECOND = 'S';
 
@@ -22,6 +22,11 @@ class TimeUnit
     public function getCode()
     {
         return (self::MINUTE === $this->unit) ? 'M' : $this->unit;
+    }
+
+    public function getUnit()
+    {
+        return $this->unit;
     }
 
     public function isTime()

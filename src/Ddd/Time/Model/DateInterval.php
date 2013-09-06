@@ -96,7 +96,7 @@ class DateInterval implements IntervalInterface
 
         return
             $begin === max($begin, $other->getBegin()->toDateTime()) &&
-            $end === min($end, $other->getEnd()->toDateTime())
+            $end   === min($end, $other->getEnd()->toDateTime())
         ;
     }
 

@@ -39,23 +39,23 @@ class Duration
 
     public function toSeconds()
     {
-        if ($this->unit->getCode() == TimeUnit::SECOND) {
+        if ($this->unit->getUnit() == TimeUnit::SECOND) {
             return $this;
         }
 
-        if ($this->unit->getCode() == TimeUnit::MINUTE) {
+        if ($this->unit->getUnit() == TimeUnit::MINUTE) {
             return new Duration(self::NB_SECOND_PER_MINUTE * $this->value, TimeUnit::second());
         }
 
-        if ($this->unit->getCode() == TimeUnit::HOUR) {
+        if ($this->unit->getUnit() == TimeUnit::HOUR) {
             return new Duration(self::NB_SECOND_PER_HOUR * $this->value, TimeUnit::second());
         }
 
-        if ($this->unit->getCode() == TimeUnit::DAY) {
+        if ($this->unit->getUnit() == TimeUnit::DAY) {
             return new Duration(self::NB_SECOND_PER_DAY * $this->value, TimeUnit::second());
         }
 
-        if ($this->unit->getCode() == TimeUnit::WEEK) {
+        if ($this->unit->getUnit() == TimeUnit::WEEK) {
             return new Duration(self::NB_SECOND_PER_WEEK, TimeUnit::second());
         }
 
@@ -64,23 +64,23 @@ class Duration
 
     public function toMinutes()
     {
-        if ($this->unit->getCode() == TimeUnit::MINUTE) {
+        if ($this->unit->getUnit() == TimeUnit::MINUTE) {
             return $this;
         }
 
-        if ($this->unit->getCode() ==  TimeUnit::SECOND) {
+        if ($this->unit->getUnit() ==  TimeUnit::SECOND) {
             return new Duration(floor($this->value / self::NB_SECOND_PER_MINUTE), TimeUnit::minute());
         }
 
-        if ($this->unit->getCode() == TimeUnit::HOUR) {
+        if ($this->unit->getUnit() == TimeUnit::HOUR) {
             return new Duration(self::NB_MINUTE_PER_HOUR * $this->value, TimeUnit::minute());
         }
 
-        if ($this->unit->getCode() == TimeUnit::DAY) {
+        if ($this->unit->getUnit() == TimeUnit::DAY) {
             return new Duration(self::NB_MINUTE_PER_DAY * $this->value, TimeUnit::minute());
         }
 
-        if ($this->unit->getCode() == TimeUnit::WEEK) {
+        if ($this->unit->getUnit() == TimeUnit::WEEK) {
             return new Duration(self::NB_MINUTE_PER_WEEK * $this->value, TimeUnit::minute());
         }
 
@@ -89,24 +89,24 @@ class Duration
 
     public function toHours()
     {
-        if ($this->unit->getCode() == TimeUnit::HOUR) {
+        if ($this->unit->getUnit() == TimeUnit::HOUR) {
             return $this;
         }
 
-        if ($this->unit->getCode() == TimeUnit::SECOND) {
+        if ($this->unit->getUnit() == TimeUnit::SECOND) {
             return new Duration(floor($this->value / (self::NB_SECOND_PER_HOUR)), TimeUnit::hour());
         }
 
-        if ($this->unit->getCode() == TimeUnit::MINUTE) {
+        if ($this->unit->getUnit() == TimeUnit::MINUTE) {
             return new Duration(floor($this->value / self::NB_MINUTE_PER_HOUR), TimeUnit::hour());
         }
 
-        if ($this->unit->getCode() == TimeUnit::DAY) {
+        if ($this->unit->getUnit() == TimeUnit::DAY) {
             return new Duration(self::NB_HOUR_PER_DAY * $this->value, TimeUnit::hour());
         }
 
-        if ($this->unit->getCode() == TimeUnit::WEEK) {
-            return new Duration(self::NB_MINUTE_PER_WEEK * $this->value, TimeUnit::hour());
+        if ($this->unit->getUnit() == TimeUnit::WEEK) {
+            return new Duration(self::NB_HOUR_PER_WEEK * $this->value, TimeUnit::hour());
         }
 
         throw new \LogicException('can\'t convert some months or years to hours.');
@@ -114,23 +114,23 @@ class Duration
 
     public function toDays()
     {
-        if ($this->unit->getCode() == TimeUnit::DAY) {
+        if ($this->unit->getUnit() == TimeUnit::DAY) {
             return $this;
         }
 
-        if ($this->unit->getCode() == TimeUnit::SECOND) {
+        if ($this->unit->getUnit() == TimeUnit::SECOND) {
             return new Duration(floor($this->value / self::NB_SECOND_PER_DAY), TimeUnit::day());
         }
 
-        if ($this->unit->getCode() == TimeUnit::MINUTE) {
+        if ($this->unit->getUnit() == TimeUnit::MINUTE) {
             return new Duration(floor($this->value / self::NB_MINUTE_PER_DAY), TimeUnit::day());
         }
 
-        if ($this->unit->getCode() == TimeUnit::HOUR) {
+        if ($this->unit->getUnit() == TimeUnit::HOUR) {
             return new Duration(floor($this->value/ self::NB_HOUR_PER_DAY), TimeUnit::day());
         }
 
-        if ($this->unit->getCode() == TimeUnit::WEEK) {
+        if ($this->unit->getUnit() == TimeUnit::WEEK) {
             return new Duration(self::NB_DAY_PER_WEEK * $this->value, TimeUnit::day());
         }
 
@@ -139,23 +139,23 @@ class Duration
 
     public function toWeeks()
     {
-        if ($this->unit->getCode() == TimeUnit::WEEK) {
+        if ($this->unit->getUnit() == TimeUnit::WEEK) {
             return $this;
         }
 
-        if ($this->unit->getCode() == TimeUnit::SECOND) {
+        if ($this->unit->getUnit() == TimeUnit::SECOND) {
             return new Duration(floor($this->value / self::NB_SECOND_PER_WEEK), TimeUnit::week());
         }
 
-        if ($this->unit->getCode() == TimeUnit::MINUTE) {
+        if ($this->unit->getUnit() == TimeUnit::MINUTE) {
             return new Duration(floor($this->value / self::NB_MINUTE_PER_WEEK), TimeUnit::week());
         }
 
-        if ($this->unit->getCode() == TimeUnit::HOUR) {
+        if ($this->unit->getUnit() == TimeUnit::HOUR) {
             return new Duration(floor($this->value / self::NB_HOUR_PER_WEEK), TimeUnit::week());
         }
 
-        if ($this->unit->getCode() == TimeUnit::DAY) {
+        if ($this->unit->getUnit() == TimeUnit::DAY) {
             return new Duration(floor($this->value / self::NB_DAY_PER_WEEK), TimeUnit::week());
         }
 

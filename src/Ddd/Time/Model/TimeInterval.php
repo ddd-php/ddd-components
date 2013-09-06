@@ -7,10 +7,10 @@ class TimeInterval implements IntervalInterface
     private $begin;
     private $end;
 
-    public function __construct(TimePoint $beginTime, TimePoint $endTime)
+    public function __construct(TimePoint $begin, TimePoint $end)
     {
-        $this->begin = $beginTime;
-        $this->end = $endTime;
+        $this->begin = $begin;
+        $this->end   = $end;
     }
 
     public function isEquals(TimeInterval $interval)
@@ -59,8 +59,8 @@ class TimeInterval implements IntervalInterface
     public function getLength()
     {
         $begin = $this->begin->toDateTime();
-        $end = $this->end->toDateTime();
-        $diff = $begin->diff($end);
+        $end   = $this->end->toDateTime();
+        $diff  = $begin->diff($end);
 
         return new Duration($diff->format('%H'), TimeUnit::hour());
     }
