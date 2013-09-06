@@ -57,19 +57,28 @@ class DateInterval implements IntervalInterface
 
     public function isBefore(IntervalInterface $other)
     {
-        return $this->begin->isBefore($other->getBegin()) && $this->begin->isBefore($other->getEnd());
+        $begin = ($other instanceof TimeInterval) ? $other->getBegin()->getDate() : $other->getBegin();
+        $end = ($other instanceof TimeInterval) ? $other->getEnd()->getDate() : $other->getEnd();
+
+        return $this->begin->isBefore($begin) && $this->begin->isBefore($end);
     }
 
     public function isAfter(IntervalInterface $other)
     {
-        return $this->begin->isAfter($other->getBegin()) && $this->begin->isAfter($other->getEnd());
+        $begin = ($other instanceof TimeInterval) ? $other->getBegin()->getDate() : $other->getBegin();
+        $end = ($other instanceof TimeInterval) ? $other->getEnd()->getDate() : $other->getEnd();
+
+        return $this->begin->isAfter($begin) && $this->begin->isAfter($end);
     }
 
     public function isDuring(IntervalInterface $other)
     {
+        $begin = $this->begin->toDateTime();
+        $end = $this->end->toDateTime();
+
         return
-            $this->begin === max($this->begin, $other->getBegin()) &&
-            $this->end === min($this->end, $other->getEnd())
+            $begin === max($begin, $other->getBegin()->toDateTime()) &&
+            $end === min($end, $other->getEnd()->toDateTime())
         ;
     }
 

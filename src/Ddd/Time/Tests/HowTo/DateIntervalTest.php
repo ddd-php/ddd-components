@@ -7,6 +7,7 @@ use Ddd\Time\Model\DateInterval;
 use Ddd\Time\Model\Date;
 use Ddd\Time\Model\TimeUnit;
 use Ddd\Time\Model\Duration;
+use Ddd\Time\Factory\TimeIntervalFactory;
 
 class DateIntervalTest extends TestCase
 {
@@ -67,7 +68,12 @@ class DateIntervalTest extends TestCase
 
     public function testHowToKnowIfADateIntervalIsBeforeAfterDuringAGivenTimeInterval()
     {
-        $this->markTestIncomplete();
+        $jan10to20   = new DateInterval(new Date(2013, 1, 10), new Date(2013, 1, 20));
+        $timeInterval = TimeIntervalFactory::create('2013-01-01 10:00', '2013-01-21 20:00');
+
+        $this->assertFalse($jan10to20->isBefore($timeInterval));
+        $this->assertTrue($jan10to20->isDuring($timeInterval));
+        $this->assertFalse($jan10to20->isAfter($timeInterval));
     }
 
     public function testHowToKnowIfADateIntervalIsBeforeAfterDuringAGivenTimePoint()
