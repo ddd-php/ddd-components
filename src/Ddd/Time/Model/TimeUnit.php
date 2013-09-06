@@ -4,10 +4,11 @@ namespace Ddd\Time\Model;
 
 class TimeUnit
 {
-    const YEAR = 'Y';
-    const MONTH = 'M';
-    const DAY = 'D';
-    const HOUR = 'H';
+    const YEAR   = 'Y';
+    const MONTH  = 'M';
+    const WEEK   = 'W';
+    const DAY    = 'D';
+    const HOUR   = 'H';
     const MINUTE = 'I';
     const SECOND = 'S';
 
@@ -21,6 +22,11 @@ class TimeUnit
     public function getCode()
     {
         return (self::MINUTE === $this->unit) ? 'M' : $this->unit;
+    }
+
+    public function getUnit()
+    {
+        return $this->unit;
     }
 
     public function isTime()
@@ -42,6 +48,11 @@ class TimeUnit
         return new self(self::MONTH);
     }
 
+    static public function week()
+    {
+        return new self(self::WEEK);
+    }
+
     static public function day()
     {
         return new self(self::DAY);
@@ -55,5 +66,10 @@ class TimeUnit
     static public function minute()
     {
         return new self(self::MINUTE);
+    }
+
+    static public function second()
+    {
+        return new self(self::SECOND);
     }
 }

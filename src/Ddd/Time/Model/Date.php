@@ -73,7 +73,7 @@ class Date
         $curDate = $this;
         while ($i < 8) {
             $dtime = $curDate->toDateTime();
-            $numOfWeek = (int)$dtime->format('N');
+            $numOfWeek = (int) $dtime->format('N');
             if (1 === $numOfWeek) {
                 return $curDate;
             }
