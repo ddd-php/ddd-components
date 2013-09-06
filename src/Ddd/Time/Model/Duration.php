@@ -5,17 +5,23 @@ namespace Ddd\Time\Model;
 class Duration
 {
     const NB_SECOND_PER_MINUTE = 60;
-    const NB_MINUTE_PER_HOUR = 60;
-    const NB_HOUR_PER_DAY = 24;
-    const NB_DAY_PER_WEEK = 7;
+    const NB_SECOND_PER_HOUR   = 3600;
+    const NB_SECOND_PER_DAY    = 86400;
+    const NB_SECOND_PER_WEEK   = 604800;
+    const NB_MINUTE_PER_HOUR   = 60;
+    const NB_MINUTE_PER_DAY    = 1440;
+    const NB_MINUTE_PER_WEEK   = 10080;
+    const NB_HOUR_PER_DAY      = 24;
+    const NB_HOUR_PER_WEEK     = 168;
+    const NB_DAY_PER_WEEK      = 7;
 
     private $value = null;
-    private $unit = null;
+    private $unit  = null;
 
     public function __construct($duration, TimeUnit $unit)
     {
         $this->value = $duration;
-        $this->unit = $unit;
+        $this->unit  = $unit;
     }
 
     public function asPHPDateInterval()
@@ -33,123 +39,126 @@ class Duration
 
     public function toSeconds()
     {
-        switch($this->unit->getCode()) {
-            case TimeUnit::SECOND:
-                return $this;
-            case TimeUnit::MINUTE:
-                $value = self::NB_SECOND_PER_MINUTE * $this->value;
-                break;
-            case TimeUnit::HOUR:
-                $value = self::NB_SECOND_PER_MINUTE * self::NB_MINUTE_PER_HOUR * $this->value;
-                break;
-            case TimeUnit::DAY:
-                $value = self::NB_SECOND_PER_MINUTE * self::NB_MINUTE_PER_HOUR 
-                    * self::NB_HOUR_PER_DAY * $this->value;
-                break;
-            case TimeUnit::WEEK:
-                $value = self::NB_SECOND_PER_MINUTE * self::NB_MINUTE_PER_HOUR 
-                    * self::NB_HOUR_PER_DAY * self::NB_DAY_PER_WEEK;
-                break;
-            default:
-               throw new \LogicException('can\'t convert some months or years to seconds.');
+        if ($this->unit->getCode() == TimeUnit::SECOND) {
+            return $this;
         }
 
-        return new Duration($value, TimeUnit::second());
+        if ($this->unit->getCode() == TimeUnit::MINUTE) {
+            return new Duration(self::NB_SECOND_PER_MINUTE * $this->value, TimeUnit::second());
+        }
+
+        if ($this->unit->getCode() == TimeUnit::HOUR) {
+            return new Duration(self::NB_SECOND_PER_HOUR * $this->value, TimeUnit::second());
+        }
+
+        if ($this->unit->getCode() == TimeUnit::DAY) {
+            return new Duration(self::NB_SECOND_PER_DAY * $this->value, TimeUnit::second());
+        }
+
+        if ($this->unit->getCode() == TimeUnit::WEEK) {
+            return new Duration(self::NB_SECOND_PER_WEEK, TimeUnit::second());
+        }
+
+        throw new \LogicException('can\'t convert some months or years to seconds.');
     }
 
     public function toMinutes()
     {
-        switch($this->unit->getCode()) {
-            case TimeUnit::SECOND:
-                $value = floor($this->value / self::NB_SECOND_PER_MINUTE);
-                break;
-            case TimeUnit::MINUTE:
-                return $this;
-            case TimeUnit::HOUR:
-                $value = $this->value * self::NB_MINUTE_PER_HOUR;
-                break;
-            case TimeUnit::DAY:
-                $value = $this->value * self::NB_MINUTE_PER_HOUR * self::NB_HOUR_PER_DAY;
-                break;
-            case TimeUnit::WEEK:
-                $calue = $this->value * self::NB_MINUTE_PER_HOUR * self::NB_HOUR_PER_DAY * self::NB_DAY_PER_WEEK;
-                break;
-            default:
-                throw new \LogicException('can\'t convert some months or years to minutes.');
+        if ($this->unit->getCode() == TimeUnit::MINUTE) {
+            return $this;
         }
 
-        return new Duration($value, TimeUnit::minute());
+        if ($this->unit->getCode() ==  TimeUnit::SECOND) {
+            return new Duration(floor($this->value / self::NB_SECOND_PER_MINUTE), TimeUnit::minute());
+        }
+
+        if ($this->unit->getCode() == TimeUnit::HOUR) {
+            return new Duration(self::NB_MINUTE_PER_HOUR * $this->value, TimeUnit::minute());
+        }
+
+        if ($this->unit->getCode() == TimeUnit::DAY) {
+            return new Duration(self::NB_MINUTE_PER_DAY * $this->value, TimeUnit::minute());
+        }
+
+        if ($this->unit->getCode() == TimeUnit::WEEK) {
+            return new Duration(self::NB_MINUTE_PER_WEEK * $this->value, TimeUnit::minute());
+        }
+
+        throw new \LogicException('can\'t convert some months or years to minutes.');
     }
 
     public function toHours()
     {
-        switch($this->unit->getCode()) {
-            case TimeUnit::SECOND:
-                $value = floor($this->value / (self::NB_SECOND_PER_MINUTE * self::NB_MINUTE_PER_HOUR));
-                break;
-            case TimeUnit::MINUTE:
-                $value = floor($this->value / self::NB_MINUTE_PER_HOUR);
-                break;
-            case TimeUnit::HOUR:
-                return $this;
-            case TimeUnit::DAY:
-                $value = $this->value * self::NB_HOUR_PER_DAY;
-                break;
-            case TimeUnit::WEEK:
-                $value = $this->value * self::NB_HOUR_PER_DAY * self::NB_DAY_PER_WEEK;
-                break;
-            default:
-                throw new \LogicException('can\'t convert some months or years to hours.');
+        if ($this->unit->getCode() == TimeUnit::HOUR) {
+            return $this;
         }
 
-        return new Duration($value, TimeUnit::hour());
+        if ($this->unit->getCode() == TimeUnit::SECOND) {
+            return new Duration(floor($this->value / (self::NB_SECOND_PER_HOUR)), TimeUnit::hour());
+        }
+
+        if ($this->unit->getCode() == TimeUnit::MINUTE) {
+            return new Duration(floor($this->value / self::NB_MINUTE_PER_HOUR), TimeUnit::hour());
+        }
+
+        if ($this->unit->getCode() == TimeUnit::DAY) {
+            return new Duration(self::NB_HOUR_PER_DAY * $this->value, TimeUnit::hour());
+        }
+
+        if ($this->unit->getCode() == TimeUnit::WEEK) {
+            return new Duration(self::NB_MINUTE_PER_WEEK * $this->value, TimeUnit::hour());
+        }
+
+        throw new \LogicException('can\'t convert some months or years to hours.');
     }
 
     public function toDays()
     {
-        switch($this->unit->getCode()) {
-            case TimeUnit::SECOND:
-                $value = floor($this->value / (self::NB_SECOND_PER_MINUTE * self::NB_MINUTE_PER_HOUR * self::NB_HOUR_PER_DAY));
-                break;
-            case TimeUnit::MINUTE:
-                $value = floor($this->value / (self::NB_MINUTE_PER_HOUR * self::NB_HOUR_PER_DAY));
-                break;
-            case TimeUnit::HOUR:
-                $value = floor($this->value / self::NB_HOUR_PER_DAY);
-                break;
-            case TimeUnit::DAY:
-                return $this;
-            case TimeUnit::WEEK:
-                $value = $this->value * self::NB_DAY_PER_WEEK;
-                break;
-            default:
-                throw new \LogicException('can\'t convert some months or years to days.');
+        if ($this->unit->getCode() == TimeUnit::DAY) {
+            return $this;
         }
 
-        return new Duration($value, TimeUnit::day());
+        if ($this->unit->getCode() == TimeUnit::SECOND) {
+            return new Duration(floor($this->value / self::NB_SECOND_PER_DAY), TimeUnit::day());
+        }
+
+        if ($this->unit->getCode() == TimeUnit::MINUTE) {
+            return new Duration(floor($this->value / self::NB_MINUTE_PER_DAY), TimeUnit::day());
+        }
+
+        if ($this->unit->getCode() == TimeUnit::HOUR) {
+            return new Duration(floor($this->value/ self::NB_HOUR_PER_DAY), TimeUnit::day());
+        }
+
+        if ($this->unit->getCode() == TimeUnit::WEEK) {
+            return new Duration(self::NB_DAY_PER_WEEK * $this->value, TimeUnit::day());
+        }
+
+        throw new \LogicException('can\'t convert some months or years to days.');
     }
 
     public function toWeeks()
     {
-        switch($this->unit->getCode()) {
-            case TimeUnit::SECOND:
-                $value = floor($this->value / (self::NB_SECOND_PER_MINUTE * self::NB_MINUTE_PER_HOUR * self::NB_HOUR_PER_DAY * self::NB_DAY_PER_WEEK));
-                break;
-            case TimeUnit::MINUTE:
-                $value = floor($this->value / (self::NB_MINUTE_PER_HOUR * self::NB_HOUR_PER_DAY * self::NB_DAY_PER_WEEK));
-                break;
-            case TimeUnit::HOUR:
-                $value = floor($this->value / (self::NB_HOUR_PER_DAY * self::NB_DAY_PER_WEEK));
-                break;
-            case TimeUnit::DAY:
-                $value = floor($this->value / self::NB_DAY_PER_WEEK);
-                break;
-            case TimeUnit::WEEK:
-                return $this;
-            default:
-                throw new \LogicException('can\'t convert some months or years to weeks.');
+        if ($this->unit->getCode() == TimeUnit::WEEK) {
+            return $this;
         }
 
-       return new Duration($value, TimeUnit::day());
+        if ($this->unit->getCode() == TimeUnit::SECOND) {
+            return new Duration(floor($this->value / self::NB_SECOND_PER_WEEK), TimeUnit::week());
+        }
+
+        if ($this->unit->getCode() == TimeUnit::MINUTE) {
+            return new Duration(floor($this->value / self::NB_MINUTE_PER_WEEK), TimeUnit::week());
+        }
+
+        if ($this->unit->getCode() == TimeUnit::HOUR) {
+            return new Duration(floor($this->value / self::NB_HOUR_PER_WEEK), TimeUnit::week());
+        }
+
+        if ($this->unit->getCode() == TimeUnit::DAY) {
+            return new Duration(floor($this->value / self::NB_DAY_PER_WEEK), TimeUnit::week());
+        }
+
+        throw new \LogicException('can\'t convert some months or years to weeks.');
     }
 }
