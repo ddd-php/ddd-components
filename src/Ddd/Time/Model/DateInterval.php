@@ -8,21 +8,22 @@ class DateInterval implements IntervalInterface
     private $current;
     private $end;
 
-    public function __construct(Date $beginDate, Date $endDate)
+    public function __construct(Date $begin, Date $end)
     {
-        if ($endDate->isBefore($beginDate)) {
+        if ($end->isBefore($begin)) {
             throw new \Exception('DateInterval: the begin date must be before the end date.');
         }
 
-        $this->begin = $beginDate;
-        $this->end = $endDate;
+        $this->begin   = $begin;
+        $this->end     = $end;
         $this->current = $this->begin;
     }
 
     public function nextDate()
     {
         $this->current = $this->current->next();
-        return false === $this->current->isAfter($this->end);
+
+        return !$this->current->isAfter($this->end);
     }
 
     public function getCurrent()
@@ -41,20 +42,29 @@ class DateInterval implements IntervalInterface
     }
 
     /**
-     * Gets the value of begin
+     * Gets the begin value
      *
-     * @return
+     * @return Date
      */
     public function getBegin()
     {
         return $this->begin;
     }
 
+    /**
+     * Gets the end value
+     *
+     * @return Date
+     */
     public function getEnd()
     {
         return $this->end;
     }
 
+    /**
+     * @param IntervalInterface $other
+     * @return bool
+     */
     public function isBefore(IntervalInterface $other)
     {
         $begin = ($other instanceof TimeInterval) ? $other->getBegin()->getDate() : $other->getBegin();
@@ -63,6 +73,10 @@ class DateInterval implements IntervalInterface
         return $this->begin->isBefore($begin) && $this->begin->isBefore($end);
     }
 
+    /**
+     * @param IntervalInterface $other
+     * @return bool
+     */
     public function isAfter(IntervalInterface $other)
     {
         $begin = ($other instanceof TimeInterval) ? $other->getBegin()->getDate() : $other->getBegin();
@@ -71,6 +85,10 @@ class DateInterval implements IntervalInterface
         return $this->begin->isAfter($begin) && $this->begin->isAfter($end);
     }
 
+    /**
+     * @param IntervalInterface $other
+     * @return bool
+     */
     public function isDuring(IntervalInterface $other)
     {
         $begin = $this->begin->toDateTime();
@@ -78,7 +96,7 @@ class DateInterval implements IntervalInterface
 
         return
             $begin === max($begin, $other->getBegin()->toDateTime()) &&
-            $end === min($end, $other->getEnd()->toDateTime())
+            $end   === min($end, $other->getEnd()->toDateTime())
         ;
     }
 
