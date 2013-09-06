@@ -6,6 +6,7 @@ class TimeUnit
 {
     const YEAR = 'Y';
     const MONTH = 'M';
+    const WEEK = 'W';
     const DAY = 'D';
     const HOUR = 'H';
     const MINUTE = 'I';
@@ -42,6 +43,11 @@ class TimeUnit
         return new self(self::MONTH);
     }
 
+    static public function week()
+    {
+        return new self(self::WEEK);
+    }
+
     static public function day()
     {
         return new self(self::DAY);
@@ -55,5 +61,10 @@ class TimeUnit
     static public function minute()
     {
         return new self(self::MINUTE);
+    }
+
+    static public function second()
+    {
+        return new self(self::SECOND);
     }
 }
