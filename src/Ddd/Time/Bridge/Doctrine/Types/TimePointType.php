@@ -1,14 +1,10 @@
 <?php
-namespace Ddd\Calendar\Infra\Doctrine;
+namespace Ddd\Time\Bridge\Doctrine\Types;
 
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-
 use Ddd\Time\Factory\TimePointFactory;
 
-/**
- * My custom datatype.
- */
 class TimePointType extends Type
 {
     const TIMEPOINT = 'timepoint';
@@ -31,7 +27,7 @@ class TimePointType extends Type
     public function convertToDatabaseValue($timepoint, AbstractPlatform $platform)
     {
         if ($timepoint !== null) {
-            $dtime = $timepoint->asPHPDateTime();
+            $dtime = $timepoint->toDateTime();
             return $dtime->format($platform->getDateTimeFormatString());
         }
     }
