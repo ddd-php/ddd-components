@@ -3,11 +3,11 @@ namespace Ddd\Time\Bridge\Doctrine\Types;
 
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Ddd\Time\Factory\TimePointIntervalFactory;
+use Ddd\Time\Factory\TimeIntervalFactory;
 
-class TimePointIntervalType extends Type
+class TimeIntervalType extends Type
 {
-    const TIMEPOINT_INTERVAL = 'timepoint_interval';
+    const TIME_INTERVAL = 'timepoint_interval';
 
     public function getSqlDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
@@ -18,7 +18,7 @@ class TimePointIntervalType extends Type
     {
         list($begin, $end) = explode(',', $timepointIntervalFromDatabase);
 
-        return TimePointIntervalFactory::create($begin, $end);
+        return TimeIntervalFactory::create($begin, $end);
     }
 
     public function convertToDatabaseValue($timepointInterval, AbstractPlatform $platform)
@@ -33,6 +33,6 @@ class TimePointIntervalType extends Type
 
     public function getName()
     {
-        return self::TIMEPOINT_INTERVAL;
+        return self::TIME_INTERVAL;
     }
 }
