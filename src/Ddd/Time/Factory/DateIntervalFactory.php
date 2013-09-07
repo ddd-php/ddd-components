@@ -7,6 +7,8 @@ use Ddd\Time\Model\DateInterval;
 
 class DateIntervalFactory
 {
+    const FORMAT_DATE = 'Y-m-d';
+
     static public function today()
     {
         $now = new \DateTime();
@@ -18,15 +20,16 @@ class DateIntervalFactory
         );
     }
 
-    static public function create($begin, $end)
+    static public function create($beginString, $endString)
     {
-        $begin = \DateTime::createFromFormat('Y-m-d', $begin);
-        $end = \DateTime::createFromFormat('Y-m-d', $end);
+        $begin = \DateTime::createFromFormat(self::FORMAT_DATE, $beginString);
+        $end = \DateTime::createFromFormat(self::FORMAT_DATE, $endString);
 
-        return new DateInterval(
-            new Date($begin->format('Y'), $begin->format('m'), $begin->format('d')),
-            new Date($end->format('Y'), $end->format('m'), $end->format('d'))
-        );
+        if (!$begin || !$end) {
+            throw new \InvalidArgumentException(sprintf('The given interval "%s,%s" does not respect the expected format: "%s,%s".', $beginString, $endString, self::FORMAT_DATE, self::FORMAT_DATE));
+        }
+
+        return new DateInterval(DateFactory::fromDateTime($begin), DateFactory::fromDateTime($end));
     }
 }
 
