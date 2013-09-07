@@ -8,15 +8,18 @@ use Ddd\Time\Model\TimePoint;
 
 class TimeIntervalFactory
 {
-    static public function create($begin, $end)
-    {
-        $begin = \DateTime::createFromFormat('Y-m-d G:i', $begin);
-        $end = \DateTime::createFromFormat('Y-m-d G:i', $end);
+    const FORMAT_TIMEPOINT = 'Y-m-d G:i';
 
-        return new TimeInterval(
-            new TimePoint($begin->format('Y'), $begin->format('m'), $begin->format('d'), $begin->format('G'), $begin->format('i')),
-            new TimePoint($end->format('Y'), $end->format('m'), $end->format('d'), $end->format('G'), $end->format('i'))
-        );
+    static public function create($beginString, $endString)
+    {
+        $begin = \DateTime::createFromFormat(self::FORMAT_TIMEPOINT, $beginString);
+        $end = \DateTime::createFromFormat(self::FORMAT_TIMEPOINT, $endString);
+
+        if (!$begin || !$end) {
+            throw new \InvalidArgumentException(sprintf('The given interval "%s,%s" does not respect the expected format: "%s,%s".', $beginString, $endString, self::FORMAT_TIMEPOINT, self::FORMAT_TIMEPOINT));
+        }
+
+        return new TimeInterval(TimePointFactory::fromDateTime($begin), TimePointFactory::fromDateTime($end));
     }
 
     static public function fromDateInterval(DateInterval $dateInterval)
