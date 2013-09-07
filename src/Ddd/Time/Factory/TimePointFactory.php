@@ -15,6 +15,11 @@ class TimePointFactory
 
     static public function fromTimestamp($timestamp)
     {
+        $timestamp = (int)$timestamp;
+        if (!$timestamp) {
+            return;
+        }
+
         $dateTime = new \DateTime();
         $dateTime->setTimestamp($timestamp);
 
