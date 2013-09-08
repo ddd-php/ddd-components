@@ -64,4 +64,9 @@ class TimeInterval implements IntervalInterface
 
         return new Duration($diff->format('%H'), TimeUnit::hour());
     }
+
+    public function isInclude(IntervalInterface $other)
+    {
+        throw new \Exception('Not yet implemented.');
+    }
 }

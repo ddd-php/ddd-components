@@ -109,5 +109,16 @@ class DateInterval implements IntervalInterface
     {
         throw new \Exception('Not implemented');
     }
+
+    public function isInclude(IntervalInterface $other)
+    {
+        $otherBegin = ($other instanceof TimeInterval) ? $other->getBegin()->getDate() : $other->getBegin();
+        $otherEnd = ($other instanceof TimeInterval) ? $other->getEnd()->getDate() : $other->getEnd();
+
+        return
+            ($this->begin->isBefore($otherBegin) || $this->begin->isEquals($otherBegin)) &&
+            ($this->end->isAfter($otherEnd) || $this->end->isEquals($otherEnd))
+        ;
+    }
 }
 

@@ -7,6 +7,7 @@ use Ddd\Time\Model\Duration;
 use Ddd\Time\Model\TimeUnit;
 use Ddd\Time\Model\TimeInterval;
 use Ddd\Time\Factory\TimeIntervalFactory;
+use Ddd\Time\Factory\DateIntervalFactory;
 use Ddd\Time\Tests\TestCase;
 
 class TimeIntervalTest extends TestCase
@@ -60,5 +61,16 @@ class TimeIntervalTest extends TestCase
 
         $this->assertTrue($interval->isDuring($intervalC));
         $this->assertTrue($intervalC->isDuring($interval));
+    }
+
+    public function testIsInclude()
+    {
+        $interval = TimeIntervalFactory::create('2013-01-13 01:00', '2013-01-14 18:30');
+
+        $this->markTestIncomplete('Method should be implemented');
+        $this->assertTrue($interval->isInclude(TimeIntervalFactory::create('2013-01-13 00:59', '2013-01-14 18:30')));
+        $this->assertTrue($interval->isInclude($interval));
+        $this->assertTrue($interval->isInclude(TimeIntervalFactory::create('2013-01-13 01:00', '2013-01-14 18:31')));
+        $this->assertTrue($interval->isInclude(DateIntervalFactory::create('2013-01-13', '2013-01-14')));
     }
 }
