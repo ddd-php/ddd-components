@@ -37,17 +37,24 @@ class TimePointTest extends TestCase
 
     public function testHowToKnowIfItIsBeforeAfterDuringAGivenDateInterval()
     {
-        
+        $this->markTestIncomplete();
     }
 
-    public function testHowToKnowIfAItIsBbeforeAfterEqualAGivenTimeInterval()
+    public function testHowToKnowIfItIsBeforeAfterEqualAGivenTimeInterval()
     {
         $this->markTestIncomplete();
     }
 
     public function testHowToKnowIfItIsDuringNightOrDaylight()
     {
-        $this->markTestIncomplete();
+        $nightTimePoint = new TimePoint(2013, 3, 12, 3, 30);
+        $dayTimePoint = new TimePoint(2013, 3, 12, 15, 30);
+
+
+        var_dump($nightTimePoint, $dayTimePoint);
+        // Using the Eiffel Tower's coordinates
+        $this->assertTrue($nightTimePoint->isNightTime(48.8582, 2.2945));
+        $this->assertFalse($dayTimePoint->isNightTime(48.8582, 2.2945));
     }
 
     public function testHowToAddRemoveDurationFromIt()

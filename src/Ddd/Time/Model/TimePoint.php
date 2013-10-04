@@ -2,6 +2,8 @@
 
 namespace Ddd\Time\Model;
 
+use Ddd\Time\Factory\TimePointFactory;
+
 class TimePoint
 {
     private $date;
@@ -30,7 +32,7 @@ class TimePoint
         $date = $this->toDateTime();
         $date->add($duration->asPHPDateInterval());
 
-        return $this->fromDateTime($date);
+        return TimePointFactory::fromDateTime($date);
     }
 
     public function minus(Duration $duration)
@@ -38,7 +40,7 @@ class TimePoint
         $date = $this->toDateTime();
         $date->sub($duration->asPHPDateInterval());
 
-        return $this->fromDateTime($date);
+        return TimePointFactory::fromDateTime($date);
     }
 
     public function isAfter(TimePoint $point)
@@ -137,16 +139,17 @@ class TimePoint
         return $this->time;
     }
 
-    private function fromDateTime(\DateTime $date)
+    public function isNightTime($latitude, $longitude)
     {
-        return new self(
-            $date->format('Y'),
-            $date->format('m'),
-            $date->format('d'),
-            $date->format('H'),
-            $date->format('i'),
-            $date->format('s')
-        );
+        $yesterdaySunset = date_sunset($this->date->previous()->toDateTime()->getTimestamp(), SUNFUNCS_RET_TIMESTAMP, $latitude, $longitude);
+        $todaySunrise = date_sunrise($this->date->toDateTime()->getTimestamp(), SUNFUNCS_RET_TIMESTAMP, $latitude, $longitude);
+
+        if (false === $yesterdaySunset || false === $todaySunrise) {
+            throw new \RuntimeException('PHP could not determine the sun information.');
+        }
+
+        return ($this->isAfter(TimePointFactory::fromTimestamp($yesterdaySunset))
+            && $this->isBefore(TimePointFactory::fromTimestamp($todaySunrise)));
     }
 
     public function __toString()
