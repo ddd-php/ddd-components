@@ -21,17 +21,26 @@ class DateIntervalTest extends TestCase
 
     public function testHowToGetNumberOfHoursBetween2Dates()
     {
-        $this->markTestIncomplete();
+        $interval = new DateInterval(new Date(2013, 1, 1), new Date(2013, 1, 3));
+        $duration = $interval->getDuration();
+
+        $this->assertEquals(new Duration(48, TimeUnit::hour()), $duration->toHours()); // 2 days
     }
 
     public function testHowToGetNumberOfMinutesBetween2Dates()
     {
-        $this->markTestIncomplete();
+        $interval = new DateInterval(new Date(2013, 1, 1), new Date(2013, 1, 3));
+        $duration = $interval->getDuration();
+
+        $this->assertEquals(new Duration(60*24*2, TimeUnit::minute()), $duration->toMinutes()); // 2 days
     }
 
     public function testHowToGetNumberOfSecondsBetween2Dates()
     {
-        $this->markTestIncomplete();
+        $interval = new DateInterval(new Date(2013, 1, 1), new Date(2013, 1, 2));
+        $duration = $interval->getDuration();
+
+        $this->assertEquals(new Duration(60*60*24, TimeUnit::second()), $duration->toSeconds()); // 1 day
     }
 
     public function testHowToGetEachDayBetween2Dates()
