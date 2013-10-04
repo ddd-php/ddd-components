@@ -71,12 +71,11 @@ Ddd\Time\Tests\HowTo\TimePoint
  [x] How to know if it is before after equal an other time point
  [x] How to know if it is before after equal a given date
  [x] How to know if it is before after during a given date interval
- [ ] How to know if a it is bbefore after equal a given time interval
- [ ] How to know if it is during night or daylight
+ [x] How to know if it is before after equals a given time interval
+ [x] How to know if it is during night or daylight
  [x] How to add remove duration from it
  [x] How to convert a ddd time point object into regular date timeobject
  [x] How to know if time point is before during after a time interval
-
 ```
 
 Inspired by: http://timeandmoney.sourceforge.net/timealgebra.html
