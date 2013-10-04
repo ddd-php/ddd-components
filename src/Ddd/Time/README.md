@@ -48,10 +48,9 @@ Ddd\Time\Tests\HowTo\Date
 
 Ddd\Time\Tests\HowTo\Duration
  [x] How to know how long x days in hours minutes seconds
- [ ] How to know how long x weeks in days hours minutes seconds
- [ ] How to know how long x months in weeks days hours minutes seconds
- [ ] How to know how long x years in months weeks days hours minutes seconds
- [ ] How to know how long x centuries in years months weeks days hours minutes seconds
+ [x] How to know how long x weeks in days hours minutes seconds
+ [x] How to know how long x months in weeks days hours minutes seconds
+ [x] How to know how long x years in months weeks days hours minutes seconds
  [ ] How to know how long a years b months c weeks d days in hours minutes seconds
 
 Ddd\Time\Tests\HowTo\TimeInterval

@@ -72,11 +72,11 @@ class Duration
             return new Duration(self::NB_SECOND_PER_WEEK, TimeUnit::second());
         }
 
-        if ($this->unit->getUnit() == TimeUnit::MONTH) {
+        if (TimeUnit::MONTH === $this->unit->getUnit() || TimeUnit::YEAR === $this->unit->getUnit()) {
             return $this->toDays()->toSeconds();
         }
 
-        throw new \LogicException('can\'t convert some months or years to seconds.');
+        throw new \LogicException('Can\'t convert duration.');
     }
 
     public function toMinutes()
@@ -101,11 +101,11 @@ class Duration
             return new Duration(self::NB_MINUTE_PER_WEEK * $this->value, TimeUnit::minute());
         }
 
-        if ($this->unit->getUnit() == TimeUnit::MONTH) {
+        if (TimeUnit::MONTH === $this->unit->getUnit() || TimeUnit::YEAR === $this->unit->getUnit()) {
             return $this->toDays()->toMinutes();
         }
 
-        throw new \LogicException('can\'t convert some years to minutes.');
+        throw new \LogicException('Can\'t convert duration.');
     }
 
     public function toHours()
@@ -130,7 +130,7 @@ class Duration
             return new Duration(self::NB_HOUR_PER_WEEK * $this->value, TimeUnit::hour());
         }
 
-        if ($this->unit->getUnit() == TimeUnit::MONTH) {
+        if (TimeUnit::MONTH === $this->unit->getUnit() || TimeUnit::YEAR === $this->unit->getUnit()) {
             return $this->toDays()->toHours();
         }
 
@@ -160,13 +160,23 @@ class Duration
         }
 
         if ($this->unit->getUnit() == TimeUnit::MONTH) {
-            $numberOfDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $this->month, $this->year);
             $firstMonth = new \DateTime();
             $firstMonth->setDate($this->year, $this->month, 1);
             $endMonth = new \DateTime();
             $endMonth->setDate($this->year, $this->month, 1);
             $endMonth->add(new \DateInterval('P'.$this->value.'M'));
             $interval = $firstMonth->diff($endMonth);
+
+            return new Duration($interval->days, TimeUnit::day());
+        }
+
+        if ($this->unit->getUnit() == TimeUnit::YEAR) {
+            $firstYear = new \DateTime();
+            $firstYear->setDate($this->year, 1, 1);
+            $endYear = new \DateTime();
+            $endYear->setDate($this->year, 1, 1);
+            $endYear->add(new \DateInterval('P'.$this->value.'Y'));
+            $interval = $firstYear->diff($endYear);
 
             return new Duration($interval->days, TimeUnit::day());
         }

@@ -32,6 +32,7 @@ class DurationTest extends TestCase
     {
         $duration1 = new Duration(2, TimeUnit::month(), 2013, 2);
         $duration2 = new Duration(2, TimeUnit::month(), 2012, 2);
+
         $this->assertEquals(new Duration(28+31, TimeUnit::day()), $duration1->toDays());
         $this->assertEquals(new Duration(29+31, TimeUnit::day()), $duration2->toDays());
         $this->assertEquals(new Duration((28+31)*24, TimeUnit::hour()), $duration1->toHours());
@@ -41,7 +42,14 @@ class DurationTest extends TestCase
 
     public function testHowToKnowHowLongXYearsInMonthsWeeksDaysHoursMinutesSeconds()
     {
-        $this->markTestIncomplete();
+        $duration1 = new Duration(1, TimeUnit::year(), 2013);
+        $duration2 = new Duration(1, TimeUnit::year(), 2012);
+
+        $this->assertEquals(new Duration(365, TimeUnit::day()), $duration1->toDays());
+        $this->assertEquals(new Duration(366, TimeUnit::day()), $duration2->toDays());
+        $this->assertEquals(new Duration(365*24, TimeUnit::hour()), $duration1->toHours());
+        $this->assertEquals(new Duration(365*24*60, TimeUnit::minute()), $duration1->toMinutes());
+        $this->assertEquals(new Duration(365*24*60*60, TimeUnit::second()), $duration1->toSeconds());
     }
 
     public function testHowToKnowHowLongAYearsBMonthsCWeeksDDaysInHoursMinutesSeconds()
