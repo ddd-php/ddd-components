@@ -2,10 +2,12 @@
 
 namespace Ddd\Time\Tests\HowTo;
 
+use Ddd\Time\Model\TimeInterval;
 use Ddd\Time\Tests\TestCase;
 use Ddd\Time\Model\TimePoint;
 use Ddd\Time\Model\Duration;
 use Ddd\Time\Model\TimeUnit;
+use Ddd\Time\Model\DateInterval;
 use Ddd\Time\Model\Date;
 use Ddd\Time\Factory\DateIntervalFactory;
 use Ddd\Time\Factory\TimeIntervalFactory;
@@ -26,23 +28,33 @@ class TimePointTest extends TestCase
 
     public function testHowToKnowIfItIsBeforeAfterEqualAGivenDate()
     {
-        $timepoint = new TimePoint(2013, 3, 12, 18, 27);
-        $datebefore = new Date(2013, 1, 1);
-        $dateafter = new Date(2013, 8, 15);
-        $dateequal = new Date(2013, 3, 12);
-        $this->assertEquals(true, $datebefore->isBefore($timepoint->getDate()));
-        $this->assertEquals(true, $dateafter->isAfter($timepoint->getDate()));
-        $this->assertEquals(true, $dateequal->isEquals($timepoint->getDate()));
+        $timePoint = new TimePoint(2013, 3, 12, 18, 27);
+        $dateBefore = new Date(2013, 1, 1);
+        $dateAfter = new Date(2013, 8, 15);
+        $dateEqual = new Date(2013, 3, 12);
+        $this->assertEquals(true, $dateBefore->isBefore($timePoint->getDate()));
+        $this->assertEquals(true, $dateAfter->isAfter($timePoint->getDate()));
+        $this->assertEquals(true, $dateEqual->isEquals($timePoint->getDate()));
     }
 
     public function testHowToKnowIfItIsBeforeAfterDuringAGivenDateInterval()
     {
-        $this->markTestIncomplete();
+        $timePoint = new TimePoint(2013, 3, 1, 18, 27);
+        $dateInterval = new DateInterval(new Date(2013, 1, 1), new Date(2013, 1, 15));
+
+        $this->assertEquals(true, $dateInterval->isBefore($timePoint->getDate()->toDateInterval()));
+        $this->assertEquals(false, $dateInterval->isAfter($timePoint->getDate()->toDateInterval()));
+        $this->assertEquals(false, $dateInterval->isDuring($timePoint->getDate()->toDateInterval()));
     }
 
-    public function testHowToKnowIfItIsBeforeAfterEqualAGivenTimeInterval()
+    public function testHowToKnowIfItIsBeforeAfterEqualsAGivenTimeInterval()
     {
-        $this->markTestIncomplete();
+        $timePoint = new TimePoint(2013, 3, 1, 18, 27);
+        $timeInterval = new TimeInterval(new TimePoint(2013, 1, 1, 0, 30), new TimePoint(2013, 1, 15, 23, 30));
+
+        $this->assertEquals(true, $timeInterval->isBefore($timePoint->toTimeInterval()));
+        $this->assertEquals(false, $timeInterval->isAfter($timePoint->toTimeInterval()));
+        $this->assertEquals(false, $timeInterval->isDuring($timePoint->toTimeInterval()));
     }
 
     public function testHowToKnowIfItIsDuringNightOrDaylight()
@@ -50,8 +62,6 @@ class TimePointTest extends TestCase
         $nightTimePoint = new TimePoint(2013, 3, 12, 3, 30);
         $dayTimePoint = new TimePoint(2013, 3, 12, 15, 30);
 
-
-        var_dump($nightTimePoint, $dayTimePoint);
         // Using the Eiffel Tower's coordinates
         $this->assertTrue($nightTimePoint->isNightTime(48.8582, 2.2945));
         $this->assertFalse($dayTimePoint->isNightTime(48.8582, 2.2945));
