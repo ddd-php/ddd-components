@@ -21,20 +21,25 @@ class DurationTest extends TestCase
 
     public function testHowToKnowHowLongXWeeksInDaysHoursMinutesSeconds()
     {
-        $this->markTestIncomplete();
+        $duration1 = new Duration(1, TimeUnit::week());
+        $this->assertEquals(new Duration(7, TimeUnit::day()), $duration1->toDays());
+        $this->assertEquals(new Duration(7*24, TimeUnit::hour()), $duration1->toHours());
+        $this->assertEquals(new Duration(7*24*60, TimeUnit::minute()), $duration1->toMinutes());
+        $this->assertEquals(new Duration(7*24*60*60, TimeUnit::second()), $duration1->toSeconds());
     }
 
     public function testHowToKnowHowLongXMonthsInWeeksDaysHoursMinutesSeconds()
     {
-        $this->markTestIncomplete();
+        $duration1 = new Duration(2, TimeUnit::month(), 2013, 2);
+        $duration2 = new Duration(2, TimeUnit::month(), 2012, 2);
+        $this->assertEquals(new Duration(28+31, TimeUnit::day()), $duration1->toDays());
+        $this->assertEquals(new Duration(29+31, TimeUnit::day()), $duration2->toDays());
+        $this->assertEquals(new Duration((28+31)*24, TimeUnit::hour()), $duration1->toHours());
+        $this->assertEquals(new Duration((28+31)*24*60, TimeUnit::minute()), $duration1->toMinutes());
+        $this->assertEquals(new Duration((28+31)*24*60*60, TimeUnit::second()), $duration1->toSeconds());
     }
 
     public function testHowToKnowHowLongXYearsInMonthsWeeksDaysHoursMinutesSeconds()
-    {
-        $this->markTestIncomplete();
-    }
-
-    public function testHowToKnowHowLongXCenturiesInYearsMonthsWeeksDaysHoursMinutesSeconds()
     {
         $this->markTestIncomplete();
     }

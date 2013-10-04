@@ -15,13 +15,26 @@ class Duration
     const NB_HOUR_PER_WEEK     = 168;
     const NB_DAY_PER_WEEK      = 7;
 
-    private $value = null;
-    private $unit  = null;
+    private $value;
+    private $unit;
+    private $year;
+    private $month;
 
-    public function __construct($duration, TimeUnit $unit)
+    public function __construct($duration, TimeUnit $unit, $year = null, $month = null)
     {
         $this->value = $duration;
         $this->unit  = $unit;
+
+        if (TimeUnit::MONTH === $unit->getUnit() && (null === $year || null === $month)) {
+            throw new \InvalidArgumentException(sprintf('Year and month should be provided to determine the duration.'));
+        }
+
+        if (TimeUnit::YEAR === $unit->getUnit() && null === $year) {
+            throw new \InvalidArgumentException(sprintf('Year should be provided to determine the duration.'));
+        }
+
+        $this->year = $year;
+        $this->month = $month;
     }
 
     public function asPHPDateInterval()
@@ -59,6 +72,10 @@ class Duration
             return new Duration(self::NB_SECOND_PER_WEEK, TimeUnit::second());
         }
 
+        if ($this->unit->getUnit() == TimeUnit::MONTH) {
+            return $this->toDays()->toSeconds();
+        }
+
         throw new \LogicException('can\'t convert some months or years to seconds.');
     }
 
@@ -84,7 +101,11 @@ class Duration
             return new Duration(self::NB_MINUTE_PER_WEEK * $this->value, TimeUnit::minute());
         }
 
-        throw new \LogicException('can\'t convert some months or years to minutes.');
+        if ($this->unit->getUnit() == TimeUnit::MONTH) {
+            return $this->toDays()->toMinutes();
+        }
+
+        throw new \LogicException('can\'t convert some years to minutes.');
     }
 
     public function toHours()
@@ -109,7 +130,11 @@ class Duration
             return new Duration(self::NB_HOUR_PER_WEEK * $this->value, TimeUnit::hour());
         }
 
-        throw new \LogicException('can\'t convert some months or years to hours.');
+        if ($this->unit->getUnit() == TimeUnit::MONTH) {
+            return $this->toDays()->toHours();
+        }
+
+        throw new \LogicException('can\'t convert some years to hours.');
     }
 
     public function toDays()
@@ -132,6 +157,18 @@ class Duration
 
         if ($this->unit->getUnit() == TimeUnit::WEEK) {
             return new Duration(self::NB_DAY_PER_WEEK * $this->value, TimeUnit::day());
+        }
+
+        if ($this->unit->getUnit() == TimeUnit::MONTH) {
+            $numberOfDaysInMonth = cal_days_in_month(CAL_GREGORIAN, $this->month, $this->year);
+            $firstMonth = new \DateTime();
+            $firstMonth->setDate($this->year, $this->month, 1);
+            $endMonth = new \DateTime();
+            $endMonth->setDate($this->year, $this->month, 1);
+            $endMonth->add(new \DateInterval('P'.$this->value.'M'));
+            $interval = $firstMonth->diff($endMonth);
+
+            return new Duration($interval->days, TimeUnit::day());
         }
 
         throw new \LogicException('can\'t convert some months or years to days.');
