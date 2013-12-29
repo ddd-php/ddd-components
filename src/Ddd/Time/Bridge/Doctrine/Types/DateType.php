@@ -1,7 +1,7 @@
 <?php
 namespace Ddd\Time\Bridge\Doctrine\Types;
 
-use Doctrine\DBAL\Types\DateType;
+use Doctrine\DBAL\Types\DateType as BaseDateType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Ddd\Time\Factory\DateFactory;
 
