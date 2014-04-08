@@ -34,7 +34,7 @@ class AmazonSesMailer implements MailerInterface
         }
 
         $message = array(
-            'Source' => $mail->getFrom()->toString(),
+            'Source' => (string) $mail->getFrom(),
             'Destination' => array(
                 'ToAddresses' => array_keys($recipients)
             ),
