@@ -4,6 +4,7 @@ namespace Ddd\Mail;
 
 use Ddd\Mail\Model\Contact;
 use Ddd\Mail\Model\TextMail;
+use Ddd\Mail\Model\HtmlMail;
 
 class MailBuilder
 {
@@ -48,6 +49,17 @@ class MailBuilder
     public function getTextMail()
     {
         $mail = new TextMail($this->from);
+        $mail->compose($this->subject, $this->body);
+        foreach ($this->recipients as $recipient) {
+            $mail->addRecipient($recipient);
+        }
+
+        return $mail;
+    }
+
+    public function getHtmlMail()
+    {
+        $mail = new HtmlMail($this->from);
         $mail->compose($this->subject, $this->body);
         foreach ($this->recipients as $recipient) {
             $mail->addRecipient($recipient);
